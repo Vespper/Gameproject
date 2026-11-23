@@ -11,7 +11,7 @@ Mon premier jeu vidéo : un **tower defense roguelike** fait avec **Godot 4**.
 
 ## Ouvrir le projet sous Windows
 
-1. Télécharger **Godot 4** (version *Standard*, pas *.NET*) sur <https://godotengine.org/download/windows/>. Le projet est prévu pour Godot 4.5 ou plus récent.
+1. Télécharger **Godot 4** (version *Standard*, pas *.NET*) sur <https://godotengine.org/download/windows/>. Le projet est prévu pour Godot 4.5 ou plus récent (Vespper utilise la 4.7.1).
 2. Dézipper le fichier et lancer `Godot_v4.x-stable_win64.exe` (pas d'installation nécessaire).
 3. Récupérer le projet sur l'ordinateur, au choix :
    - avec **GitHub Desktop** : *File → Clone repository* puis choisir `Gameproject` ;
@@ -40,17 +40,23 @@ scenes/          Les scènes Godot (.tscn), avec leur script (.gd) à côté
 scripts/         Scripts qui ne sont pas liés à une scène précise
   autoload/      Scripts globaux toujours chargés (état de la partie, etc.)
 data/            Données du jeu (stats des tours, récompenses…) en ressources .tres
-docs/            Notes de design, idées
+docs/            Documentation (design, architecture, feuille de route)
 ```
 
 Règle simple : **une scène et son script vivent dans le même dossier** (par exemple `scenes/towers/archer_tower.tscn` et `scenes/towers/archer_tower.gd`). Les fichiers sont nommés en `snake_case` (minuscules et tirets bas).
 
 Les fichiers `.gitkeep` servent juste à garder les dossiers vides dans Git ; on peut les supprimer quand le dossier contient autre chose.
 
-## Feuille de route
+## Documentation
 
-1. ✅ Mise en place du projet
-2. ⬜ Prototype d'**une seule salle** : un chemin, des ennemis qui le suivent, une tour qui tire
-3. ⬜ Plusieurs vagues et une condition de victoire / défaite
-4. ⬜ Portes de sortie et passage à la salle suivante
-5. ⬜ Récompenses annoncées sur les portes
+- [Feuille de route et prochaine étape](docs/roadmap.md)
+- [Game design](docs/design/gdd.md) · [Direction artistique](docs/design/art-direction.md)
+- [Architecture](docs/architecture.md) · [Conventions](docs/conventions.md) · [Poste de travail](docs/setup.md)
+- [Décisions prises](docs/decisions.md)
+
+## Travailler avec Claude Code
+
+`CLAUDE.md` est volontairement court : il indique quel fichier de `docs/` lire selon la tâche, pour ne pas recharger tout le contexte à chaque session.
+
+- Agents (`.claude/agents/`) : `godot-dev` pour le code et les scènes, `game-designer` pour les règles et l'équilibrage.
+- Skills (`.claude/skills/`) : `/prochaine-etape` pour reprendre le travail, `/fin-de-session` pour mettre à jour la feuille de route avant de partir.
