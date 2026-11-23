@@ -15,7 +15,7 @@ Ne lis pas tout `docs/` d'office. Ouvre le fichier utile à la tâche :
 | Style visuel, palette, lisibilité | `docs/design/art-direction.md` |
 | Organisation du code, scènes, données | `docs/architecture.md` |
 | Style GDScript, nommage, git | `docs/conventions.md` |
-| Poste de travail, Godot/Blender, commandes | `docs/setup.md` |
+| Poste de travail, commandes | `docs/setup.md` (chemins de la machine : `docs/setup.local.md`, non versionné) |
 | Décisions déjà prises (ne pas les rediscuter) | `docs/decisions.md` |
 
 ## Règles qui s'appliquent toujours
@@ -27,6 +27,18 @@ Ne lis pas tout `docs/` d'office. Ouvre le fichier utile à la tâche :
 - Ne jamais committer `.godot/` ni éditer `project.godot` à la main sans raison.
 - Vespper teste dans l'éditeur (F5) : décrire à chaque PR quoi tester et quoi ressentir.
 - Fin de session : lancer la skill `fin-de-session` pour mettre à jour `docs/roadmap.md` (et `docs/decisions.md` si une décision a été prise).
+
+## Scripts (préférer à des commandes Godot écrites à la main)
+
+- `tools/check.sh` : erreurs de script (fichier et ligne), sinon « OK ». À lancer après chaque modification de `.gd`, `.tscn` ou `.tres`.
+- `tools/test.sh` : tests headless `tests/test_*.gd`, n'affiche que les résultats.
+- `tools/run.sh` : lance le jeu.
+
+Une commande répétée plusieurs fois ou à la sortie trop longue mérite un script dans `tools/` : l'ajouter et le lister ici.
+
+## Données privées
+
+Le dépôt est public : aucun chemin de la machine, nom de dossier personnel ou identifiant dans les fichiers versionnés. Ils vont dans `docs/setup.local.md` ou `tools/local.env`.
 
 ## Agents
 
