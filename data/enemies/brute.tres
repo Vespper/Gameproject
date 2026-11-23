@@ -8,6 +8,7 @@ display_name = "Brute"
 max_health = 170.0
 speed = 50.0
 base_damage = 3
+contact_damage = 2
 energy_drop = 25
 radius = 18.0
 shape_sides = 4

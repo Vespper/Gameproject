@@ -4,9 +4,15 @@ extends SceneTree
 ## Option : ajouter « -- passive » pour que le personnage ne fasse rien (doit mener à la défaite).
 
 const ROOM_SCENE := preload("res://scenes/rooms/room_prototype.tscn")
-const MAX_SECONDS := 400.0
-## Ordre de construction du « joueur automatique » : [emplacement, type de tour].
-const BUILD_ORDER := [[1, 0], [2, 0], [5, 1], [6, 2], [4, 0], [7, 0], [9, 1], [3, 2], [0, 0], [8, 0]]
+const MAX_SECONDS := 600.0
+## Ordre de construction du « joueur automatique » : [position, type de tour].
+const BUILD_ORDER := [
+	[Vector2(420, 240), 0], [Vector2(420, 420), 0], [Vector2(530, 320), 1], [Vector2(750, 300), 2],
+	[Vector2(530, 460), 0], [Vector2(750, 440), 0], [Vector2(1080, 420), 1], [Vector2(200, 460), 2],
+	[Vector2(180, 220), 0], [Vector2(850, 110), 0], [Vector2(1180, 400), 1], [Vector2(860, 620), 0],
+]
+## Point de repli du personnage quand il n'a rien à ramasser.
+const SAFE_SPOT := Vector2(480, 380)
 
 var _room: Node2D
 var _player: Player
@@ -20,6 +26,7 @@ func _initialize() -> void:
 	_room = ROOM_SCENE.instantiate()
 	root.add_child(_room)
 	_player = _room.get_node("Player")
+	_player.mouse_aim = false
 	print("Test salle (%s)" % ("personnage passif" if _passive else "joueur automatique"))
 
 
@@ -29,9 +36,7 @@ func _process(delta: float) -> bool:
 		_report()
 		return true
 	_build()
-	var spawner: WaveSpawner = _room.get_node("WaveSpawner")
-	if not spawner.is_wave_running() and spawner.has_next_wave():
-		_room.call("_start_wave")
+	_room.call("_start_waves")
 	if not _passive:
 		_play_player()
 	return false
@@ -45,50 +50,50 @@ func _build() -> void:
 	var tower: TowerData = tower_types[step[1]]
 	if int(_room.get("energy")) < tower.cost:
 		return
-	_room.set("selected_tower", step[1])
-	var slot: Marker2D = _room.get_node("BuildSlots").get_child(step[0])
-	_room.call("_try_build", slot.global_position)
-	print("%6.1f s  tour %s posée (emplacement %d)" % [_elapsed, tower.display_name, step[0] + 1])
+	var placed: bool = _room.call("try_build", step[1], step[0])
+	print("%6.1f s  tour %s %s en %s" % [_elapsed, tower.display_name, "posée" if placed else "REFUSÉE", step[0]])
 	_build_step += 1
 
 
-## Va vers l'énergie au sol en priorité, sinon vers l'ennemi le plus avancé, et frappe.
+## Ramasse l'énergie, sinon revient au point de repli ; tire sur l'ennemi le plus avancé.
 func _play_player() -> void:
-	var target_position: Variant = null
+	var destination: Vector2 = SAFE_SPOT
 	var pickups: Array[Node] = _room.get_node("Pickups").get_children()
 	if not pickups.is_empty():
-		target_position = (pickups[0] as Node2D).global_position
-	else:
-		var best: Enemy = null
-		for node in get_nodes_in_group("enemies"):
-			var enemy := node as Enemy
-			if best == null or enemy.progress > best.progress:
-				best = enemy
-		if best != null:
-			target_position = best.global_position
+		destination = (pickups[0] as Node2D).global_position
 	for action in ["move_left", "move_right", "move_up", "move_down"]:
 		Input.action_release(action)
-	if target_position != null:
-		var to: Vector2 = (target_position as Vector2) - _player.global_position
-		if to.length() > 12.0:
-			if to.x < -6.0: Input.action_press("move_left")
-			if to.x > 6.0: Input.action_press("move_right")
-			if to.y < -6.0: Input.action_press("move_up")
-			if to.y > 6.0: Input.action_press("move_down")
-	Input.action_press("attack")
-	if _player.spell_time_left <= 0.0 and not get_nodes_in_group("enemies").is_empty():
-		Input.action_press("spell")
+	var to: Vector2 = destination - _player.global_position
+	if to.length() > 12.0:
+		if to.x < -6.0: Input.action_press("move_left")
+		if to.x > 6.0: Input.action_press("move_right")
+		if to.y < -6.0: Input.action_press("move_up")
+		if to.y > 6.0: Input.action_press("move_down")
+
+	var target: Enemy = null
+	for node in get_nodes_in_group("enemies"):
+		var enemy := node as Enemy
+		if enemy.global_position.distance_to(_player.global_position) > _player.shot_range:
+			continue
+		if target == null or enemy.progress > target.progress:
+			target = enemy
+	if target != null:
+		_player.aim_position = target.global_position
+		Input.action_press("attack")
+		if _player.spell_time_left <= 0.0 and target.global_position.distance_to(_player.global_position) < _player.spell_radius:
+			Input.action_press("spell")
+		else:
+			Input.action_release("spell")
 	else:
-		Input.action_release("spell")
+		Input.action_release("attack")
 
 
 func _report() -> void:
-	var base: Base = _room.get_node("Base")
 	var spawner: WaveSpawner = _room.get_node("WaveSpawner")
-	var result: String = "VICTOIRE" if base.health > 0 and not spawner.has_next_wave() and not spawner.is_wave_running() else "DÉFAITE"
+	var result: String = "VICTOIRE" if _player.health > 0 else "DÉFAITE"
 	if _elapsed > MAX_SECONDS:
 		result = "TEMPS ÉCOULÉ"
-	print("Résultat : %s après %.0f s — base %d/%d PV, vague %d/%d, énergie %d, %d tours" % [
-		result, _elapsed, base.health, base.max_health, spawner.current_wave + 1, spawner.waves.size(),
+	print("Résultat : %s après %.0f s — PV %d/%d, vague %d/%d, énergie %d, %d tours" % [
+		result, _elapsed, _player.health, _player.max_health, spawner.current_wave + 1, spawner.waves.size(),
 		int(_room.get("energy")), _room.get_node("Towers").get_child_count()
 	])

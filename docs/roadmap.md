@@ -17,9 +17,9 @@ Chaque étape = une PR testable avec F5.
 
 - [x] Salle : un sol, un chemin fixe (`Path2D`), une entrée ennemie, une base avec des PV
 - [x] Un ennemi qui suit le chemin et retire des PV à la base en arrivant
-- [x] Une tour posée à la souris sur un emplacement, qui vise et tire
-- [x] Le personnage : déplacement ZQSD/WASD, attaque de mêlée
-- [x] Vagues : 3 vagues définies dans `data/`, bouton « lancer la vague », victoire / défaite
+- [x] Une tour posée à la souris (librement, hors du chemin), qui vise et tire
+- [x] Le personnage : déplacement ZQSD/WASD, tir à distance, PV (contact et ennemis qui passent)
+- [x] Vagues : 3 vagues définies dans `data/`, un seul lancement puis enchaînement, victoire / défaite
 - [x] Énergie : les ennemis en lâchent, le personnage la ramasse, elle sert à poser des tours
 - [x] 3 types de tours, 3 types d'ennemis, 1 sort à recharge pour le personnage
 - [ ] Session de test : noter le ressenti dans `docs/decisions.md`
@@ -32,3 +32,4 @@ Session de test de Vespper sur le prototype (F5) : noter le ressenti dans `docs/
 
 - 2026-11-23 : projet Godot créé (PR #1), documentation et agents en place.
 - 2026-11-23 : prototype gris jouable d'une salle (chemin, base, 3 tours, 3 ennemis, 3 vagues, énergie à ramasser, mêlée + onde de givre). Test automatique : `tests/test_room_prototype.gd`.
+- 2026-11-23 : retours de Vespper intégrés (vagues enchaînées, tir à distance, PV du personnage, pose libre, plus d'ennemis).

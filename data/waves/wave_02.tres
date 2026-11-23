@@ -1,22 +1,31 @@
 [gd_resource type="Resource" script_class="WaveData" format=3]
 
-[ext_resource type="Script" path="res://scripts/data/spawn_group.gd" id="1_tltcp"]
-[ext_resource type="Resource" path="res://data/enemies/grunt.tres" id="2_v61q6"]
-[ext_resource type="Resource" path="res://data/enemies/runner.tres" id="3_ow1wx"]
-[ext_resource type="Script" path="res://scripts/data/wave_data.gd" id="4_gv7bh"]
+[ext_resource type="Script" path="res://scripts/data/spawn_group.gd" id="1_v61q6"]
+[ext_resource type="Resource" path="res://data/enemies/grunt.tres" id="2_ow1wx"]
+[ext_resource type="Resource" path="res://data/enemies/runner.tres" id="3_gv7bh"]
+[ext_resource type="Resource" path="res://data/enemies/brute.tres" id="4_3ea7e"]
+[ext_resource type="Script" path="res://scripts/data/wave_data.gd" id="5_d88ok"]
 
-[sub_resource type="Resource" id="Resource_3ea7e"]
-script = ExtResource("1_tltcp")
-enemy = ExtResource("2_v61q6")
-count = 8
+[sub_resource type="Resource" id="Resource_y2j7k"]
+script = ExtResource("1_v61q6")
+enemy = ExtResource("2_ow1wx")
+count = 16
+interval = 0.7
 
-[sub_resource type="Resource" id="Resource_d88ok"]
-script = ExtResource("1_tltcp")
-enemy = ExtResource("3_ow1wx")
-count = 6
-interval = 0.6
-start_delay = 4.0
+[sub_resource type="Resource" id="Resource_f4xq6"]
+script = ExtResource("1_v61q6")
+enemy = ExtResource("3_gv7bh")
+count = 10
+interval = 0.5
+start_delay = 3.0
+
+[sub_resource type="Resource" id="Resource_crfuw"]
+script = ExtResource("1_v61q6")
+enemy = ExtResource("4_3ea7e")
+count = 2
+interval = 4.0
+start_delay = 8.0
 
 [resource]
-script = ExtResource("4_gv7bh")
-groups = Array[ExtResource("1_tltcp")]([SubResource("Resource_3ea7e"), SubResource("Resource_d88ok")])
+script = ExtResource("5_d88ok")
+groups = Array[ExtResource("1_v61q6")]([SubResource("Resource_y2j7k"), SubResource("Resource_f4xq6"), SubResource("Resource_crfuw")])

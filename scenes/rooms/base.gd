@@ -1,19 +1,9 @@
 class_name Base
 extends Node2D
-## Ce que le joueur défend. Si ses PV tombent à 0, la partie est perdue.
-
-signal health_changed(current: int, maximum: int)
-signal destroyed
-
-@export var max_health: int = 20
-
-var health: int = 0
+## Sortie de la salle, au bout du chemin. Un ennemi qui l'atteint retire des PV au personnage.
+## Le nom « Base » est gardé pour l'instant ; elle ne porte plus de PV.
 
 var _hit_flash: float = 0.0
-
-
-func _ready() -> void:
-	health = max_health
 
 
 func _process(delta: float) -> void:
@@ -22,14 +12,10 @@ func _process(delta: float) -> void:
 		queue_redraw()
 
 
-func take_damage(amount: int) -> void:
-	if health <= 0:
-		return
-	health = maxi(health - amount, 0)
+## Petit retour visuel quand un ennemi passe.
+func flash() -> void:
 	_hit_flash = 0.25
-	health_changed.emit(health, max_health)
-	if health == 0:
-		destroyed.emit()
+	queue_redraw()
 
 
 func _draw() -> void:

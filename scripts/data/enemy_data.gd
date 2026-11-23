@@ -6,8 +6,10 @@ extends Resource
 @export var max_health: float = 30.0
 ## Vitesse le long du chemin, en pixels par seconde.
 @export var speed: float = 80.0
-## PV retirés à la base quand l'ennemi l'atteint.
+## PV retirés au personnage quand l'ennemi atteint la sortie.
 @export var base_damage: int = 1
+## PV retirés au personnage quand il touche l'ennemi.
+@export var contact_damage: int = 1
 ## Énergie lâchée à la mort.
 @export var energy_drop: int = 8
 @export var radius: float = 12.0

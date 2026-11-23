@@ -16,3 +16,7 @@ Une ligne par décision, la plus récente en bas. Ce qui est écrit ici n'est pl
 | 2026-11-23 | Contrôles | Clavier + souris ; manette plus tard. |
 | 2026-11-23 | Style | Grim dark mais lisible : décor sombre et désaturé, éléments de jeu colorés à silhouette nette. 2D ou 3D pas encore tranché. |
 | 2026-11-23 | Méthode | Prototype gris d'une salle d'abord ; itérer pas à pas. |
+| 2026-11-23 | Vagues | Un seul lancement, puis les vagues s'enchaînent seules avec une pause fixe (non contrôlée par le joueur) après la dernière apparition de chaque vague. |
+| 2026-11-23 | PV | Les PV du run sont ceux du personnage : il en perd au contact d'un ennemi et à chaque ennemi qui atteint la sortie. La « base » n'est plus qu'une sortie. |
+| 2026-11-23 | Attaque du personnage | Tir à distance vers la souris (au lieu de la mêlée), plus un sort à recharge. |
+| 2026-11-23 | Pose des tours | Libre, partout hors du chemin (pas d'emplacements prédéfinis). |

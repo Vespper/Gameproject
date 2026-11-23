@@ -1,15 +1,23 @@
 [gd_resource type="Resource" script_class="WaveData" format=3]
 
-[ext_resource type="Script" path="res://scripts/data/spawn_group.gd" id="1_rb57m"]
-[ext_resource type="Resource" path="res://data/enemies/grunt.tres" id="2_07nkl"]
-[ext_resource type="Script" path="res://scripts/data/wave_data.gd" id="3_0ki5e"]
+[ext_resource type="Script" path="res://scripts/data/spawn_group.gd" id="1_07nkl"]
+[ext_resource type="Resource" path="res://data/enemies/grunt.tres" id="2_0ki5e"]
+[ext_resource type="Resource" path="res://data/enemies/runner.tres" id="3_275op"]
+[ext_resource type="Script" path="res://scripts/data/wave_data.gd" id="4_lk52f"]
 
-[sub_resource type="Resource" id="Resource_275op"]
-script = ExtResource("1_rb57m")
-enemy = ExtResource("2_07nkl")
-count = 8
-interval = 1.2
+[sub_resource type="Resource" id="Resource_0w15w"]
+script = ExtResource("1_07nkl")
+enemy = ExtResource("2_0ki5e")
+count = 12
+interval = 0.9
+
+[sub_resource type="Resource" id="Resource_gnjx1"]
+script = ExtResource("1_07nkl")
+enemy = ExtResource("3_275op")
+count = 6
+interval = 0.7
+start_delay = 5.0
 
 [resource]
-script = ExtResource("3_0ki5e")
-groups = Array[ExtResource("1_rb57m")]([SubResource("Resource_275op")])
+script = ExtResource("4_lk52f")
+groups = Array[ExtResource("1_07nkl")]([SubResource("Resource_0w15w"), SubResource("Resource_gnjx1")])
