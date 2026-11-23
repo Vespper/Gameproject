@@ -1,0 +1,14 @@
+# Cache et imports générés par Godot 4 (recréés automatiquement à l'ouverture)
+.godot/
+
+# Exports (versions jouables générées depuis l'éditeur)
+/builds/
+/export/
+/android/
+
+# Fichiers temporaires / système
+*.tmp
+*.translation
+Thumbs.db
+desktop.ini
+.DS_Store
