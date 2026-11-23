@@ -20,3 +20,5 @@ Une ligne par décision, la plus récente en bas. Ce qui est écrit ici n'est pl
 | 2026-11-23 | PV | Les PV du run sont ceux du personnage : il en perd au contact d'un ennemi et à chaque ennemi qui atteint la sortie. La « base » n'est plus qu'une sortie. |
 | 2026-11-23 | Attaque du personnage | Tir à distance vers la souris (au lieu de la mêlée), plus un sort à recharge. |
 | 2026-11-23 | Pose des tours | Libre, partout hors du chemin (pas d'emplacements prédéfinis). |
+| 2026-11-23 | Durée d'une salle | Viser 1 à 1,5 min de combat. Pour l'instant 3 vagues courtes avec 5 s de pause (2 vagues reste une option à tester). |
+| 2026-11-23 | Tours en fin de salle | Démontées automatiquement à la victoire ; le joueur récupère une part de leur coût en énergie (50 % pour l'instant, réglable). Récupérer l'énergie en salle doit rester un peu risqué. |

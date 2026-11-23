@@ -6,6 +6,8 @@ extends Node2D
 @export var tower_scene: PackedScene
 @export var pickup_scene: PackedScene
 @export var start_energy: int = 100
+## Part du coût des tours rendue quand elles sont démontées en fin de salle.
+@export_range(0.0, 1.0) var tower_refund_ratio: float = 0.5
 
 @export_group("Pose des tours")
 ## Distance minimale entre le centre d'une tour et le milieu du chemin.
@@ -164,7 +166,21 @@ func _on_wave_started(index: int) -> void:
 func _on_all_waves_cleared() -> void:
 	if _game_over:
 		return
-	_end_game("Victoire !  (R pour recommencer)")
+	var refund := _dismantle_towers()
+	_end_game("Victoire !  Tours démontées : +%d énergie\n(R pour recommencer)" % refund)
+
+
+## Détruit toutes les tours et rend une part de leur coût. Renvoie l'énergie rendue.
+func _dismantle_towers() -> int:
+	var refund: int = 0
+	for node in _towers.get_children():
+		var tower := node as Tower
+		refund += floori(tower.data.cost * tower_refund_ratio)
+		RingEffect.spawn(_effects, tower.global_position, 30.0, tower.data.color, 0.5)
+		tower.queue_free()
+	_add_energy(refund)
+	print("Tours démontées : +%d énergie" % refund)
+	return refund
 
 
 func _on_player_died() -> void:

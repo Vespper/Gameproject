@@ -33,3 +33,4 @@ Session de test de Vespper sur le prototype (F5) : noter le ressenti dans `docs/
 - 2026-11-23 : projet Godot créé (PR #1), documentation et agents en place.
 - 2026-11-23 : prototype gris jouable d'une salle (chemin, base, 3 tours, 3 ennemis, 3 vagues, énergie à ramasser, mêlée + onde de givre). Test automatique : `tests/test_room_prototype.gd`.
 - 2026-11-23 : retours de Vespper intégrés (vagues enchaînées, tir à distance, PV du personnage, pose libre, plus d'ennemis).
+- 2026-11-23 : salle raccourcie (3 vagues courtes, ~45 s pour un joueur parfait), tours démontées en fin de salle avec 50 % du coût rendu.

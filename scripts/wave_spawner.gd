@@ -12,7 +12,7 @@ signal enemy_spawned(enemy: Enemy)
 @export var enemy_path: Path2D
 @export var enemy_scene: PackedScene
 ## Secondes entre la dernière apparition d'une vague et le début de la suivante.
-@export var pause_between_waves: float = 8.0
+@export var pause_between_waves: float = 5.0
 
 ## Index de la vague en cours (-1 avant le lancement).
 var current_wave: int = -1

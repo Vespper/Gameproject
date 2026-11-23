@@ -9,22 +9,21 @@
 [sub_resource type="Resource" id="Resource_y2j7k"]
 script = ExtResource("1_v61q6")
 enemy = ExtResource("2_ow1wx")
-count = 16
-interval = 0.7
+count = 12
+interval = 0.6
 
 [sub_resource type="Resource" id="Resource_f4xq6"]
 script = ExtResource("1_v61q6")
 enemy = ExtResource("3_gv7bh")
-count = 10
-interval = 0.5
-start_delay = 3.0
+count = 8
+interval = 0.45
+start_delay = 2.0
 
 [sub_resource type="Resource" id="Resource_crfuw"]
 script = ExtResource("1_v61q6")
 enemy = ExtResource("4_3ea7e")
-count = 2
-interval = 4.0
-start_delay = 8.0
+count = 1
+start_delay = 4.0
 
 [resource]
 script = ExtResource("5_d88ok")

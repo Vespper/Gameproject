@@ -8,15 +8,15 @@
 [sub_resource type="Resource" id="Resource_0w15w"]
 script = ExtResource("1_07nkl")
 enemy = ExtResource("2_0ki5e")
-count = 12
-interval = 0.9
+count = 10
+interval = 0.8
 
 [sub_resource type="Resource" id="Resource_gnjx1"]
 script = ExtResource("1_07nkl")
 enemy = ExtResource("3_275op")
-count = 6
-interval = 0.7
-start_delay = 5.0
+count = 4
+interval = 0.6
+start_delay = 4.0
 
 [resource]
 script = ExtResource("4_lk52f")
