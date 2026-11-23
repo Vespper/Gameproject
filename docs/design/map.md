@@ -25,11 +25,17 @@ On peut revenir dans les salles déjà nettoyées (elles restent vides).
 
 La graine du run rend l'étage reproductible (utile pour tester et déboguer).
 
+### Exemple d'étage 1
+
+![Exemple d'étage 1](img/carte_exemple.svg)
+
+8 salles : Départ, 3 Combats, Trésor, Boutique, Atelier, Boss, plus la Secrète. Pas d'Élite ici (elle n'est que possible à l'étage 1). Chaque salle n'a été ajoutée qu'à côté d'une seule salle existante, d'où la forme en branches. Les quatre culs-de-sac reçoivent les salles spéciales, le Boss prend le plus éloigné. La Secrète est sur une case vide qui touche trois salles.
+
 ## Taille
 
 | Étage | Salles (hors secrète) | Dont combats |
 |---|---|---|
-| 1 | 8 | ~4 |
+| 1 | 8 | 3 à 4 |
 | 2 | 10 | ~5 |
 | 3 | 12 | ~6 |
 
@@ -52,6 +58,20 @@ Avec des salles de combat de 1 à 1,5 min, un run de 3 étages tient dans 20 à 
 **Récompenses de combat annoncées sur la porte** : objet commun, paquet d'énergie, nouveau type de tour, soin. Le joueur choisit son chemin en fonction.
 
 **Trouver la salle secrète** : pas de bombes. Un mur qui donne sur la salle secrète est fissuré ; on l'ouvre en tirant dessus avec le personnage. Un objet pourra plus tard révéler la salle sur la mini-carte.
+
+### Liste des salles et état actuel
+
+| Salle | État |
+|---|---|
+| Combat | Prototypée (salle grise, branche `proto/salle-grise`) |
+| Départ | Conçue |
+| Boss | Conçue |
+| Trésor | Conçue |
+| Boutique | Conçue |
+| Élite (mini-boss) | Conçue |
+| Atelier | Conçue |
+| Repos | Conçue |
+| Secrète | Conçue |
 
 Plus tard, à garder en réserve : salle Puzzle, salle Événement, salle de Défi, grandes salles sur plusieurs cases.
 
