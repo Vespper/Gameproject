@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="WaveData" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/spawn_group.gd" id="1_07nkl"]
+[ext_resource type="Resource" path="res://data/enemies/grunt.tres" id="2_0ki5e"]
+[ext_resource type="Resource" path="res://data/enemies/runner.tres" id="3_275op"]
+[ext_resource type="Script" path="res://scripts/data/wave_data.gd" id="4_lk52f"]
+
+[sub_resource type="Resource" id="Resource_0w15w"]
+script = ExtResource("1_07nkl")
+enemy = ExtResource("2_0ki5e")
+count = 10
+interval = 0.8
+
+[sub_resource type="Resource" id="Resource_gnjx1"]
+script = ExtResource("1_07nkl")
+enemy = ExtResource("3_275op")
+count = 4
+interval = 0.6
+start_delay = 4.0
+
+[resource]
+script = ExtResource("4_lk52f")
+groups = Array[ExtResource("1_07nkl")]([SubResource("Resource_0w15w"), SubResource("Resource_gnjx1")])

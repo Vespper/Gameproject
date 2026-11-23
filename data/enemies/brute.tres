@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="EnemyData" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/enemy_data.gd" id="1_enbfl"]
+
+[resource]
+script = ExtResource("1_enbfl")
+display_name = "Brute"
+max_health = 150.0
+speed = 60.0
+base_damage = 3
+contact_damage = 2
+energy_drop = 25
+radius = 18.0
+shape_sides = 4
+color = Color(0.65, 0.3, 0.85, 1)
