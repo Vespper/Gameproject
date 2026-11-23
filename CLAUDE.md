@@ -12,6 +12,7 @@ Ne lis pas tout `docs/` d'office. Ouvre le fichier utile à la tâche :
 |---|---|
 | Où on en est, tâche suivante | `docs/roadmap.md` |
 | Règles du jeu, systèmes, salles, objets | `docs/design/gdd.md` |
+| Carte d'étage, types de salles, économie d'énergie | `docs/design/map.md` |
 | Style visuel, palette, lisibilité | `docs/design/art-direction.md` |
 | Organisation du code, scènes, données | `docs/architecture.md` |
 | Style GDScript, nommage, git | `docs/conventions.md` |
