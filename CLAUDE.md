@@ -13,6 +13,7 @@ Ne lis pas tout `docs/` d'office. Ouvre le fichier utile à la tâche :
 | Où on en est, tâche suivante | `docs/roadmap.md` |
 | Règles du jeu, systèmes, salles, objets | `docs/design/gdd.md` |
 | Carte d'étage, types de salles, économie d'énergie | `docs/design/map.md` |
+| Catalogue du contenu (salles, tours, ennemis, objets, personnages) et ses stats | `docs/wiki/` (commencer par `README.md`) |
 | Style visuel, palette, lisibilité | `docs/design/art-direction.md` |
 | Organisation du code, scènes, données | `docs/architecture.md` |
 | Style GDScript, nommage, git | `docs/conventions.md` |
@@ -24,6 +25,7 @@ Ne lis pas tout `docs/` d'office. Ouvre le fichier utile à la tâche :
 - Itérer pas à pas : une petite étape jouable à la fois, une PR par étape.
 - Prouver qu'**une salle** est amusante avant carte, objets ou style final.
 - Données de jeu dans `data/*.tres` (Resources), pas en dur dans le code.
+- Quand on ajoute ou change du contenu (tour, ennemi, salle, objet, personnage), mettre à jour sa ligne dans `docs/wiki/` dans la même PR.
 - Une scène et son script dans le même dossier, fichiers en `snake_case`.
 - Ne jamais committer `.godot/` ni éditer `project.godot` à la main sans raison.
 - Vespper teste dans l'éditeur (F5) : décrire à chaque PR quoi tester et quoi ressentir.
