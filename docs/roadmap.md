@@ -31,3 +31,4 @@ Construire la salle de base (premier point de la liste ci-dessus).
 ## Journal
 
 - 2026-11-23 : projet Godot créé (PR #1), documentation et agents en place.
+- 2026-11-23 : carte d'étage conçue (`docs/design/map.md`) : génération façon Isaac, salles par étage, énergie seule monnaie, 3 emplacements de types de tours.

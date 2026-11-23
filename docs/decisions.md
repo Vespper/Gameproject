@@ -16,3 +16,9 @@ Une ligne par décision, la plus récente en bas. Ce qui est écrit ici n'est pl
 | 2026-11-23 | Contrôles | Clavier + souris ; manette plus tard. |
 | 2026-11-23 | Style | Grim dark mais lisible : décor sombre et désaturé, éléments de jeu colorés à silhouette nette. 2D ou 3D pas encore tranché. |
 | 2026-11-23 | Méthode | Prototype gris d'une salle d'abord ; itérer pas à pas. |
+| 2026-11-23 | Carte d'étage | Génération façon Isaac : grille, salles ajoutées seulement sur des cases à un seul voisin (branches et culs-de-sac), salles spéciales dans les culs-de-sac, boss dans le plus éloigné. Détails dans `docs/design/map.md`. |
+| 2026-11-23 | Salles par étage | Toujours : départ, boss, trésor, boutique, secrète. Élite garantie dès l'étage 2. Atelier ou repos. Le reste : combats. |
+| 2026-11-23 | Vider l'étage | Pas obligatoire : on peut contourner des salles, on rate alors leur énergie et leur récompense. |
+| 2026-11-23 | Monnaie | Une seule : l'énergie, pour tout le run (pose des tours, boutique, atelier). L'or est abandonné. |
+| 2026-11-23 | Tours emportées | Ce qui suit le joueur, ce sont ses types de tours. Départ avec l'Archer seul. 3 emplacements de types ; au-delà il faut en remplacer un, sauf objet qui ajoute un emplacement. |
+| 2026-11-23 | Salle secrète | Pas de bombes : mur fissuré ouvert en tirant dessus. |
