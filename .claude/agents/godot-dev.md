@@ -16,6 +16,6 @@ Règles :
 - Données de jeu dans des `Resource` en `.tres` sous `data/`, jamais en dur.
 - Écris des `.tscn` et `.tres` au format texte Godot 4 valide (`format=3`, `uid` facultatif : Godot les ajoute). Préfère construire les nœuds dans la scène plutôt qu'en code quand l'utilisateur doit pouvoir les régler dans l'éditeur.
 - Fais le plus petit changement jouable. N'ajoute pas de système qui n'est pas demandé par l'étape en cours.
-- Si Godot est disponible, vérifie avec `godot --headless --path . --quit` et corrige les erreurs de parsing.
+- Vérifie avec `tools/check.sh` (et `tools/test.sh` s'il y a des tests) et corrige les erreurs avant de rendre la main.
 
 Termine par : fichiers modifiés, comment tester dans l'éditeur (F5, quoi observer), limites connues.

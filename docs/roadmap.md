@@ -35,3 +35,5 @@ Session de test de Vespper sur le prototype (F5) : noter le ressenti dans `docs/
 - 2026-11-23 : retours de Vespper intégrés (vagues enchaînées, tir à distance, PV du personnage, pose libre, plus d'ennemis).
 - 2026-11-23 : salle raccourcie (3 vagues courtes, ~45 s pour un joueur parfait), tours démontées en fin de salle avec 50 % du coût rendu.
 - 2026-11-23 : salle plus petite (960 × 520, chemin ~25 % plus court), personnage de départ affaibli.
+- 2026-11-23 : carte d'étage conçue (`docs/design/map.md`) : génération façon Isaac, salles par étage, énergie seule monnaie, 3 emplacements de types de tours.
+- 2026-11-23 : chemins de la machine retirés du dépôt (fichiers locaux ignorés), scripts `tools/check.sh`, `tools/test.sh`, `tools/run.sh`.

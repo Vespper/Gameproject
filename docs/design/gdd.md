@@ -9,7 +9,7 @@ Un roguelike où chaque salle est un petit tower defense. On avance de salle en 
 ## Boucles
 
 - **Salle (2 à 5 min)** : entrée (on découvre le plan : entrées ennemies, chemin, emplacements constructibles) → préparation (poser et déplacer les tours, aperçu de la vague) → vagues (lancer tôt donne un bonus ; les tours tirent seules, le personnage bouge, frappe, lance ses sorts) → récompense (choix parmi 2 ou 3).
-- **Run (20 à 30 min)** : 3 à 4 étages de 8 à 12 salles sur une grille (combat, trésor, boutique, secrète, boss). Chaque porte montre ce qu'il y a derrière. Retour possible dans les salles nettoyées. Les tours suivent le personnage. Le boss ouvre l'étage suivant. Fin du run quand la base tombe ou au boss final.
+- **Run (20 à 30 min)** : 3 étages de 8 à 12 salles sur une grille (voir `docs/design/map.md`). Chaque porte montre ce qu'il y a derrière. Pas obligé de tout vider ; retour possible dans les salles nettoyées. Les types de tours suivent le personnage (3 emplacements). Le boss ouvre l'étage suivant. Fin du run quand la base tombe ou au boss final.
 - **Méta-progression (plus tard, hors MVP)** : débloquer du contenu, pas de la puissance. Paliers de difficulté façon Ascension, bestiaire, encyclopédie.
 
 ## Contre le côté passif
@@ -40,24 +40,24 @@ Des rôles lisibles : rapide, blindé, volant (ignore les murs), qui se divise, 
 
 ## Salles
 
+Détail de la carte et de la présence de chaque salle par étage : `docs/design/map.md`. Puzzle et Événement sont mis en réserve.
+
 | Salle | Contenu | Récompense |
 |---|---|---|
-| Combat | Vagues standard | Choix parmi 3 : objet commun, tour, or |
+| Combat | Vagues standard | Annoncée sur la porte : objet commun, énergie, type de tour, soin |
 | Élite | Vagues dures, ennemi spécial | Objet rare garanti |
-| Puzzle | Peu de tours, placement exact | Objet ou ressource rare |
-| Boutique | Achat avec l'or | Objets, soins, retrait d'un objet |
-| Repos | Pas de combat | Soin de la base ou amélioration de tour |
-| Événement | Texte et choix risqué | Variable, parfois une malédiction |
+| Boutique | Achat en énergie | Objets, types de tours, soin |
+| Atelier | Pas de combat | Amélioration permanente d'un type de tour (énergie) |
+| Repos | Pas de combat | Soin du personnage |
+| Secrète | Cachée derrière un mur fissuré | Récompense généreuse |
 | Trésor | Rien à défendre | Un objet |
 | Boss | Fin d'étage | Objet de boss, étage suivant |
 
 ## Ressources
 
-PV de la base (vie du run), or (boutiques), énergie (gagnée en salle, sert à construire et améliorer sur place). Optionnel : clés ou bombes façon Isaac.
+PV du personnage (vie du run) et une seule monnaie, l'énergie : gagnée en salle, elle suit le joueur et sert à poser des tours, acheter en boutique et améliorer à l'atelier. Pas d'or, pas de clés ni de bombes pour l'instant.
 
 ## Questions ouvertes
 
-- Nombre maximum de tours portées.
-- Tours à usage unique ou limité ?
 - Univers : qui est le personnage, que défend-il ? Nom de travail ?
 - 2D ou 3D low-poly vue de dessus ?

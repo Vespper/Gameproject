@@ -23,3 +23,9 @@ Une ligne par décision, la plus récente en bas. Ce qui est écrit ici n'est pl
 | 2026-11-23 | Durée d'une salle | Viser 1 à 1,5 min de combat. Pour l'instant 3 vagues courtes avec 5 s de pause (2 vagues reste une option à tester). |
 | 2026-11-23 | Tours en fin de salle | Démontées automatiquement à la victoire ; le joueur récupère une part de leur coût en énergie (50 % pour l'instant, réglable). Récupérer l'énergie en salle doit rester un peu risqué. |
 | 2026-11-23 | Personnage de départ | Volontairement un peu faible (tir 8 dégâts / 0,3 s, sort 20 dégâts / 8 s) : il se renforcera pendant le run. |
+| 2026-11-23 | Carte d'étage | Génération façon Isaac : grille, salles ajoutées seulement sur des cases à un seul voisin (branches et culs-de-sac), salles spéciales dans les culs-de-sac, boss dans le plus éloigné. Détails dans `docs/design/map.md`. |
+| 2026-11-23 | Salles par étage | Toujours : départ, boss, trésor, boutique, secrète. Élite garantie dès l'étage 2. Atelier ou repos. Le reste : combats. |
+| 2026-11-23 | Vider l'étage | Pas obligatoire : on peut contourner des salles, on rate alors leur énergie et leur récompense. |
+| 2026-11-23 | Monnaie | Une seule : l'énergie, pour tout le run (pose des tours, boutique, atelier). L'or est abandonné. |
+| 2026-11-23 | Tours emportées | Ce qui suit le joueur, ce sont ses types de tours. Départ avec l'Archer seul. 3 emplacements de types ; au-delà il faut en remplacer un, sauf objet qui ajoute un emplacement. |
+| 2026-11-23 | Salle secrète | Pas de bombes : mur fissuré ouvert en tirant dessus. |

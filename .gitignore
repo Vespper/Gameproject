@@ -12,3 +12,7 @@
 Thumbs.db
 desktop.ini
 .DS_Store
+
+# Fichiers locaux propres à chaque poste (chemins, préférences)
+*.local.md
+tools/local.env
