@@ -1,0 +1,64 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scenes/ui/hud.gd" id="1_hud"]
+
+[node name="Hud" type="CanvasLayer"]
+process_mode = 3
+script = ExtResource("1_hud")
+
+[node name="StatsLabel" type="Label" parent="."]
+offset_left = 16.0
+offset_top = 10.0
+offset_right = 900.0
+offset_bottom = 40.0
+theme_override_font_sizes/font_size = 20
+text = "Base : 20 / 20 PV"
+
+[node name="TowersLabel" type="Label" parent="."]
+offset_left = 16.0
+offset_top = 600.0
+offset_right = 420.0
+offset_bottom = 700.0
+theme_override_font_sizes/font_size = 16
+vertical_alignment = 2
+
+[node name="SpellLabel" type="Label" parent="."]
+offset_left = 16.0
+offset_top = 42.0
+offset_right = 600.0
+offset_bottom = 66.0
+theme_override_font_sizes/font_size = 16
+
+[node name="HelpLabel" type="Label" parent="."]
+offset_left = 860.0
+offset_top = 600.0
+offset_right = 1264.0
+offset_bottom = 700.0
+theme_override_colors/font_color = Color(0.7, 0.7, 0.75, 1)
+theme_override_font_sizes/font_size = 14
+text = "ZQSD / WASD / flèches : se déplacer
+Espace : frapper     E / clic droit : sort
+1 2 3 : choisir une tour     Clic gauche : poser
+Entrée : lancer la vague     R : recommencer"
+horizontal_alignment = 2
+vertical_alignment = 2
+
+[node name="MessageLabel" type="Label" parent="."]
+offset_top = 300.0
+offset_right = 1280.0
+offset_bottom = 380.0
+theme_override_colors/font_color = Color(0.95, 0.8, 0.4, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 40
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="StartWaveButton" type="Button" parent="."]
+offset_left = 1060.0
+offset_top = 10.0
+offset_right = 1264.0
+offset_bottom = 50.0
+focus_mode = 0
+theme_override_font_sizes/font_size = 18
+text = "Lancer la vague 1"

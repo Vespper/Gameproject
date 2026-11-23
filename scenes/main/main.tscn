@@ -1,21 +1,9 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=3 format=3]
 
 [ext_resource type="Script" path="res://scenes/main/main.gd" id="1_main"]
+[ext_resource type="PackedScene" path="res://scenes/rooms/room_prototype.tscn" id="2_room"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_main")
 
-[node name="Background" type="ColorRect" parent="."]
-offset_right = 1280.0
-offset_bottom = 720.0
-color = Color(0.07, 0.07, 0.09, 1)
-
-[node name="Title" type="Label" parent="."]
-offset_top = 320.0
-offset_right = 1280.0
-offset_bottom = 400.0
-theme_override_colors/font_color = Color(0.91, 0.69, 0.29, 1)
-theme_override_font_sizes/font_size = 40
-text = "Gameproject — ça marche !"
-horizontal_alignment = 1
-vertical_alignment = 1
+[node name="RoomPrototype" parent="." instance=ExtResource("2_room")]

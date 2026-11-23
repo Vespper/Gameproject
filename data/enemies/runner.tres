@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="EnemyData" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/enemy_data.gd" id="1_yyxed"]
+
+[resource]
+script = ExtResource("1_yyxed")
+display_name = "Coureur"
+max_health = 18.0
+speed = 160.0
+energy_drop = 5
+radius = 10.0
+shape_sides = 3
+color = Color(0.95, 0.6, 0.2, 1)

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="TowerData" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/tower_data.gd" id="1_ur6fi"]
+
+[resource]
+script = ExtResource("1_ur6fi")
+display_name = "Givre"
+damage = 4.0
+fire_rate = 1.2
+attack_range = 140.0
+slow_factor = 0.5
+slow_duration = 2.0
+color = Color(0.5, 0.8, 1, 1)
