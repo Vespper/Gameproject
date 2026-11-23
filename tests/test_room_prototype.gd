@@ -7,12 +7,12 @@ const ROOM_SCENE := preload("res://scenes/rooms/room_prototype.tscn")
 const MAX_SECONDS := 600.0
 ## Ordre de construction du « joueur automatique » : [position, type de tour].
 const BUILD_ORDER := [
-	[Vector2(420, 240), 0], [Vector2(420, 420), 0], [Vector2(530, 320), 1], [Vector2(750, 300), 2],
-	[Vector2(530, 460), 0], [Vector2(750, 440), 0], [Vector2(1080, 420), 1], [Vector2(200, 460), 2],
-	[Vector2(180, 220), 0], [Vector2(850, 110), 0], [Vector2(1180, 400), 1], [Vector2(860, 620), 0],
+	[Vector2(520, 300), 0], [Vector2(520, 420), 0], [Vector2(760, 340), 1], [Vector2(280, 300), 2],
+	[Vector2(760, 440), 0], [Vector2(980, 360), 0], [Vector2(300, 440), 1], [Vector2(760, 140), 2],
+	[Vector2(520, 140), 0], [Vector2(1000, 560), 0], [Vector2(280, 560), 1], [Vector2(980, 140), 0],
 ]
 ## Point de repli du personnage quand il n'a rien à ramasser.
-const SAFE_SPOT := Vector2(480, 380)
+const SAFE_SPOT := Vector2(520, 360)
 
 var _room: Node2D
 var _player: Player

@@ -22,3 +22,4 @@ Une ligne par décision, la plus récente en bas. Ce qui est écrit ici n'est pl
 | 2026-11-23 | Pose des tours | Libre, partout hors du chemin (pas d'emplacements prédéfinis). |
 | 2026-11-23 | Durée d'une salle | Viser 1 à 1,5 min de combat. Pour l'instant 3 vagues courtes avec 5 s de pause (2 vagues reste une option à tester). |
 | 2026-11-23 | Tours en fin de salle | Démontées automatiquement à la victoire ; le joueur récupère une part de leur coût en énergie (50 % pour l'instant, réglable). Récupérer l'énergie en salle doit rester un peu risqué. |
+| 2026-11-23 | Personnage de départ | Volontairement un peu faible (tir 8 dégâts / 0,3 s, sort 20 dégâts / 8 s) : il se renforcera pendant le run. |

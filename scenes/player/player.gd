@@ -6,25 +6,25 @@ extends CharacterBody2D
 signal health_changed(current: int, maximum: int)
 signal died
 
-@export var speed: float = 260.0
+@export var speed: float = 240.0
 @export var max_health: int = 20
 ## Secondes d'invulnérabilité après un contact avec un ennemi.
 @export var contact_invulnerability: float = 1.0
 @export var shot_scene: PackedScene
 
 @export_group("Tir")
-@export var shot_damage: float = 10.0
+@export var shot_damage: float = 8.0
 ## Secondes entre deux tirs.
-@export var shot_cooldown: float = 0.25
+@export var shot_cooldown: float = 0.3
 @export var shot_speed: float = 750.0
-@export var shot_range: float = 420.0
+@export var shot_range: float = 360.0
 
 @export_group("Sort : onde de givre")
-@export var spell_damage: float = 25.0
-@export var spell_radius: float = 150.0
+@export var spell_damage: float = 20.0
+@export var spell_radius: float = 130.0
 @export_range(0.0, 1.0) var spell_slow_factor: float = 0.4
 @export var spell_slow_duration: float = 2.5
-@export var spell_cooldown: float = 6.0
+@export var spell_cooldown: float = 8.0
 
 @export_group("Butin")
 ## Distance à laquelle l'énergie est aspirée vers le personnage.
@@ -37,13 +37,15 @@ var can_shoot: bool = true
 ## Point visé. Suit la souris si mouse_aim est vrai.
 var aim_position: Vector2 = Vector2.ZERO
 var mouse_aim: bool = true
+## Zone où le personnage peut se déplacer (définie par la salle).
+var bounds := Rect2(16.0, 16.0, 1248.0, 688.0)
 var health: int = 0
 var spell_time_left: float = 0.0
 
 var _shot_time_left: float = 0.0
 var _invulnerable_left: float = 0.0
 var _body_radius: float = 16.0
-var _bounds := Rect2(16.0, 16.0, 1248.0, 688.0)
+
 
 
 func _ready() -> void:
@@ -57,7 +59,7 @@ func _physics_process(delta: float) -> void:
 	var direction := Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	velocity = direction * speed
 	move_and_slide()
-	position = position.clamp(_bounds.position, _bounds.end)
+	position = position.clamp(bounds.position, bounds.end)
 	if mouse_aim:
 		aim_position = get_global_mouse_position()
 

@@ -14,8 +14,8 @@ extends Node2D
 @export var min_distance_to_path: float = 44.0
 ## Distance minimale entre deux tours.
 @export var min_distance_between_towers: float = 40.0
-## Zone où l'on peut construire (évite les bords et le bandeau du haut).
-@export var build_area := Rect2(24.0, 80.0, 1232.0, 616.0)
+## Contour de la salle : sol, zone de déplacement du personnage et zone constructible.
+@export var room_rect := Rect2(160.0, 80.0, 960.0, 520.0)
 
 var energy: int = 0
 ## Type de tour en cours de pose, ou -1 si le personnage est en mode tir.
@@ -42,6 +42,9 @@ func _ready() -> void:
 	_path_line.points = curve.get_baked_points()
 	_base.global_position = _enemy_path.to_global(curve.get_point_position(curve.point_count - 1))
 	_player.effects_parent = _effects
+	_player.bounds = room_rect.grow(-16.0)
+	$Floor.position = room_rect.position
+	$Floor.size = room_rect.size
 
 	_spawner.enemy_spawned.connect(_on_enemy_spawned)
 	_spawner.wave_started.connect(_on_wave_started)
@@ -98,7 +101,7 @@ func try_build(type_index: int, at: Vector2) -> bool:
 
 ## Vrai si l'endroit est hors du chemin, dans la zone constructible et libre.
 func can_build_at(at: Vector2) -> bool:
-	if not build_area.has_point(at):
+	if not room_rect.grow(-20.0).has_point(at):
 		return false
 	var local: Vector2 = _enemy_path.to_local(at)
 	if local.distance_to(_enemy_path.curve.get_closest_point(local)) < min_distance_to_path:
