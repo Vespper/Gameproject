@@ -31,6 +31,17 @@ Ne lis pas tout `docs/` d'office. Ouvre le fichier utile à la tâche :
 - Vespper teste dans l'éditeur (F5) : décrire à chaque PR quoi tester et quoi ressentir.
 - Fin de session : lancer la skill `fin-de-session` pour mettre à jour `docs/roadmap.md` (et `docs/decisions.md` si une décision a été prise).
 
+## Git : c'est Claude qui gère tout
+
+Vespper ne touche plus à git. Claude s'en charge de bout en bout, sans lui demander de le faire :
+
+- créer la branche, committer, pousser, ouvrir la PR ;
+- fusionner la PR quand l'étape est prête (tests au vert), sans attendre que Vespper le fasse ;
+- puis mettre à jour le clone local de Vespper (chemin dans `docs/setup.local.md`) : vérifier qu'il n'y a pas de modifications non commitées, `git checkout main`, `git pull` ;
+- lui dire ensuite quoi tester avec F5.
+
+S'il y a des modifications locales non commitées dans son clone, ne rien écraser et lui demander.
+
 ## Scripts (préférer à des commandes Godot écrites à la main)
 
 - `tools/check.sh` : erreurs de script (fichier et ligne), sinon « OK ». À lancer après chaque modification de `.gd`, `.tscn` ou `.tres`.
