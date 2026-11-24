@@ -7,6 +7,8 @@ extends Node2D
 
 ## Nœud qui reçoit les projectiles (défini par la salle).
 var projectile_parent: Node
+## Énergie réellement payée à la pose (le coût monte avec le nombre de tours de la salle).
+var paid_cost: int = 0
 
 var _cooldown: float = 0.0
 var _aim: Vector2 = Vector2.UP

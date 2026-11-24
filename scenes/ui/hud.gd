@@ -31,14 +31,14 @@ func set_stats(health: int, max_health: int, energy: int, wave_number: int, wave
 		_stats_label.text += "     Vague : %d / %d" % [wave_number, wave_total]
 
 
-## selected : type de tour en cours de pose, ou -1.
-func set_towers(tower_types: Array[TowerData], selected: int, energy: int) -> void:
+## costs : coût actuel de chaque type dans la salle. selected : type en cours de pose, ou -1.
+func set_towers(tower_types: Array[TowerData], costs: Array[int], selected: int, energy: int) -> void:
 	var lines: PackedStringArray = []
 	for i in tower_types.size():
 		var tower: TowerData = tower_types[i]
 		var marker: String = "▶ " if i == selected else "   "
-		var affordable: String = "" if energy >= tower.cost else "  (pas assez)"
-		lines.append("%s[%d] %s — %d énergie%s" % [marker, i + 1, tower.display_name, tower.cost, affordable])
+		var affordable: String = "" if energy >= costs[i] else "  (pas assez)"
+		lines.append("%s[%d] %s — %d énergie%s" % [marker, i + 1, tower.display_name, costs[i], affordable])
 	if selected >= 0:
 		lines.append("Clic gauche : poser hors du chemin — Échap : annuler")
 	_towers_label.text = "\n".join(lines)

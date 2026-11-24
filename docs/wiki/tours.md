@@ -15,6 +15,8 @@ Stats des tours 🎮 recopiées de `data/towers/*.tres` (prototype). Cadence en 
 
 Vitesse des projectiles : Archer 650, Givre 500, Mortier 380.
 
+Le coût indiqué est le coût de base : dans une salle, chaque tour posée rend les suivantes 30 % plus chères (`tower_cost_increase` de la salle). À la fin de la salle, les tours rendent 25 % de ce qu'elles ont coûté.
+
 ## Questions ouvertes
 
 - Améliorations d'atelier : par niveau (+X % dégâts) ou par branche (choisir un effet) ?

@@ -13,7 +13,10 @@ signal door_entered(direction: Vector2i)
 @export var door_scene: PackedScene
 @export var start_energy: int = 100
 ## Part du coût des tours rendue quand elles sont démontées en fin de salle.
-@export_range(0.0, 1.0) var tower_refund_ratio: float = 0.5
+@export_range(0.0, 1.0) var tower_refund_ratio: float = 0.25
+## Hausse du coût pour chaque tour déjà posée dans la salle (0,3 = +30 % par tour).
+## Le compteur repart à zéro dans chaque salle.
+@export var tower_cost_increase: float = 0.3
 
 @export_group("Pose des tours")
 ## Distance minimale entre le centre d'une tour et le milieu du chemin.
@@ -47,6 +50,8 @@ var energy: int:
 		run_state.energy = value
 ## Type de tour en cours de pose, ou -1 si le personnage est en mode tir.
 var build_selection: int = -1
+## Tours posées dans cette salle (fait monter le coût des suivantes).
+var towers_built: int = 0
 
 var _game_over: bool = false
 var _cleared: bool = false
@@ -152,16 +157,25 @@ func try_build(type_index: int, at: Vector2) -> bool:
 	if _cleared or type_index < 0 or type_index >= tower_types.size():
 		return false
 	var tower_data: TowerData = tower_types[type_index]
-	if energy < tower_data.cost or not can_build_at(at):
+	var cost: int = tower_cost(type_index)
+	if energy < cost or not can_build_at(at):
 		return false
-	energy -= tower_data.cost
+	energy -= cost
+	towers_built += 1
 	var tower := tower_scene.instantiate() as Tower
 	tower.data = tower_data
+	tower.paid_cost = cost
 	tower.projectile_parent = _projectiles
 	_towers.add_child(tower)
 	tower.global_position = at
 	_refresh_hud()
 	return true
+
+
+## Coût actuel d'un type de tour : coût de base, +tower_cost_increase par tour déjà posée ici.
+func tower_cost(type_index: int) -> int:
+	var base: int = tower_types[type_index].cost
+	return roundi(base * (1.0 + tower_cost_increase * towers_built))
 
 
 ## Vrai si l'endroit est hors du chemin, dans la zone constructible et libre.
@@ -203,7 +217,10 @@ func _add_energy(amount: int) -> void:
 func _refresh_hud() -> void:
 	var wave_total: int = _spawner.waves.size() if has_combat() else 0
 	_hud.set_stats(_player.health, _player.max_health, energy, _spawner.current_wave + 1, wave_total)
-	_hud.set_towers(tower_types, build_selection, energy)
+	var costs: Array[int] = []
+	for i in tower_types.size():
+		costs.append(tower_cost(i))
+	_hud.set_towers(tower_types, costs, build_selection, energy)
 	_hud.set_wave_button(not _game_over and not _cleared and not _spawner.has_started())
 
 
@@ -259,7 +276,7 @@ func _dismantle_towers() -> int:
 	var refund: int = 0
 	for node in _towers.get_children():
 		var tower := node as Tower
-		refund += floori(tower.data.cost * tower_refund_ratio)
+		refund += floori(tower.paid_cost * tower_refund_ratio)
 		RingEffect.spawn(_effects, tower.global_position, 30.0, tower.data.color, 0.5)
 		tower.queue_free()
 	_add_energy(refund)
@@ -353,7 +370,7 @@ func _draw_overlay() -> void:
 		return
 	var tower_data: TowerData = tower_types[build_selection]
 	var at: Vector2 = get_global_mouse_position()
-	var ok: bool = energy >= tower_data.cost and can_build_at(at)
+	var ok: bool = energy >= tower_cost(build_selection) and can_build_at(at)
 	var tint := Color(0.4, 1.0, 0.5) if ok else Color(1.0, 0.35, 0.35)
 	_overlay.draw_circle(at, tower_data.attack_range, Color(tint, 0.08))
 	_overlay.draw_arc(at, tower_data.attack_range, 0.0, TAU, 64, Color(tint, 0.6), 2.0)
