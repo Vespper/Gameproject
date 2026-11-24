@@ -34,7 +34,7 @@ Chaque étape = une PR testable avec F5.
 
 ## Prochaine étape
 
-Test de Vespper (F5) sur l'enchaînement de salles : chemins générés lisibles et jouables ? Portes fermées en combat (comme Isaac) ou sortie possible avant de lancer les vagues ? Puis valider la liste des effets (`docs/wiki/effets.md`) et ajouter la récompense annoncée sur la porte.
+Test de Vespper (F5) sur l'enchaînement de salles : chemins générés lisibles et jouables ? Puis valider la liste des effets (`docs/wiki/effets.md`) et ajouter la récompense annoncée sur la porte.
 
 ## Journal
 

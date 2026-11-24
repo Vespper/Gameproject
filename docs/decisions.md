@@ -29,3 +29,4 @@ Une ligne par décision, la plus récente en bas. Ce qui est écrit ici n'est pl
 | 2026-11-23 | Monnaie | Une seule : l'énergie, pour tout le run (pose des tours, boutique, atelier). L'or est abandonné. |
 | 2026-11-23 | Tours emportées | Ce qui suit le joueur, ce sont ses types de tours. Départ avec l'Archer seul. 3 emplacements de types ; au-delà il faut en remplacer un, sauf objet qui ajoute un emplacement. |
 | 2026-11-23 | Salle secrète | Pas de bombes : mur fissuré ouvert en tirant dessus. |
+| 2026-11-24 | Portes | Comme Isaac : fermées dès qu'on entre dans une salle de combat, ouvertes seulement une fois la salle vaincue. |
