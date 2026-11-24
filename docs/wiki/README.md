@@ -13,6 +13,7 @@ Les règles générales restent dans `docs/design/gdd.md` et `docs/design/map.md
 | [Ennemis](ennemis.md) | Ennemis, élites, boss |
 | [Objets](objets.md) | Objets et synergies |
 | [Personnages](personnages.md) | Personnages jouables et leurs sorts |
+| [Effets](effets.md) | Effets de statut (gel, poison, feu…), combos, résistances |
 
 ## Statuts
 

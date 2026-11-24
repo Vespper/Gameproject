@@ -5,7 +5,7 @@ Règles de génération et présence par étage : `docs/design/map.md`.
 | Salle | Statut | Rôle | Présence par étage |
 |---|---|---|---|
 | Combat | 🎮 En jeu (prototype) | Vagues d'ennemis, récompense annoncée sur la porte | Le reste des salles |
-| Départ | 📐 Conçu | Point d'entrée, vide (tutoriel à l'étage 1) | 1 |
+| Départ | 🎮 En jeu (prototype) | Point d'entrée, vide (tutoriel à l'étage 1) | 1 |
 | Boss | 📐 Conçu | Fin d'étage, objet de boss, ouvre l'étage suivant | 1, cul-de-sac le plus éloigné |
 | Trésor | 📐 Conçu | Un objet gratuit, sans combat | 1 |
 | Boutique | 📐 Conçu | Achat en énergie : objets, types de tours, soin | 1 |
@@ -19,9 +19,11 @@ Règles de génération et présence par étage : `docs/design/map.md`.
 
 ## Combat (prototype)
 
-Salle grise du prototype (branche `proto/salle-grise`) :
+Salle grise du prototype :
 
-- Un chemin fixe de l'entrée ennemie à la sortie ; tours posées librement hors du chemin.
+- Un chemin généré au hasard (graine de la salle) de l'entrée ennemie, collée à un mur latéral, à la sortie près du mur opposé ; tours posées librement hors du chemin et loin des portes.
+- Règles du chemin (`scripts/floor/path_generator.gd`) : segments horizontaux et verticaux sur une grille de 80 px, toujours vers la sortie, 2 à 4 virages espacés d'au moins 2 cases, longueur entre 1 400 et 2 000 px, entrée et sortie loin du milieu des murs (portes).
+- Une porte par côté relié sur la carte (1 à 4), avec le type de la salle derrière. Fermées dès qu'on entre dans un combat, ouvertes une fois la salle nettoyée.
 - 3 vagues courtes qui s'enchaînent seules (5 s de pause), environ 1 min de combat.
 - 100 d'énergie au départ ; les ennemis en lâchent, à ramasser.
 - Victoire : tours démontées, 50 % de leur coût rendu en énergie.

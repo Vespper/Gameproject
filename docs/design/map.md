@@ -63,8 +63,8 @@ Avec des salles de combat de 1 à 1,5 min, un run de 3 étages tient dans 20 à 
 
 | Salle | État |
 |---|---|
-| Combat | Prototypée (salle grise, branche `proto/salle-grise`) |
-| Départ | Conçue |
+| Combat | Prototypée (chemin généré, portes) |
+| Départ | Prototypée (vide, portes ouvertes) |
 | Boss | Conçue |
 | Trésor | Conçue |
 | Boutique | Conçue |

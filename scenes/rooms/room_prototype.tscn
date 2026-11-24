@@ -16,18 +16,14 @@
 [ext_resource type="PackedScene" path="res://scenes/enemies/enemy.tscn" id="14_enemy"]
 [ext_resource type="PackedScene" path="res://scenes/player/player.tscn" id="15_player"]
 [ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="16_hud"]
-
-[sub_resource type="Curve2D" id="Curve2D_path"]
-_data = {
-"points": PackedVector2Array(0, 0, 0, 0, 160, 180, 0, 0, 0, 0, 400, 180, 0, 0, 0, 0, 400, 520, 0, 0, 0, 0, 640, 520, 0, 0, 0, 0, 640, 220, 0, 0, 0, 0, 880, 220, 0, 0, 0, 0, 880, 460, 0, 0, 0, 0, 1060, 460)
-}
-point_count = 8
+[ext_resource type="PackedScene" path="res://scenes/rooms/door.tscn" id="17_door"]
 
 [node name="RoomPrototype" type="Node2D"]
 script = ExtResource("1_room")
 tower_types = Array[ExtResource("2_tower_data")]([ExtResource("3_archer"), ExtResource("4_mortar"), ExtResource("5_frost")])
 tower_scene = ExtResource("6_tower")
 pickup_scene = ExtResource("7_pickup")
+door_scene = ExtResource("17_door")
 
 [node name="Floor" type="ColorRect" parent="."]
 offset_left = 160.0
@@ -38,7 +34,6 @@ mouse_filter = 2
 color = Color(0.12, 0.12, 0.14, 1)
 
 [node name="EnemyPath" type="Path2D" parent="."]
-curve = SubResource("Curve2D_path")
 
 [node name="PathLine" type="Line2D" parent="EnemyPath"]
 width = 44.0
@@ -46,6 +41,8 @@ default_color = Color(0.24, 0.21, 0.19, 1)
 joint_mode = 2
 
 [node name="Overlay" type="Node2D" parent="."]
+
+[node name="Doors" type="Node2D" parent="."]
 
 [node name="Base" parent="." instance=ExtResource("8_base")]
 position = Vector2(1060, 460)

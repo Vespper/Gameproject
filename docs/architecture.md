@@ -27,12 +27,26 @@ assets/           sprites, audio, polices, shaders, modèles .glb
 - **Groupes** : `enemies`, `towers`, `player` pour les recherches de cibles.
 - **Couches physiques** (à fixer dans `project.godot` quand on en a besoin) : 1 monde, 2 personnage, 3 ennemis, 4 tours, 5 projectiles, 6 butin.
 
+## Run et étage (prototype)
+
+```
+Main (Node2D)                   tient le run : génère l'étage, remplace la salle quand on passe une porte
+├── <salle actuelle>            instance de room_prototype.tscn
+└── MinimapLayer/Minimap
+```
+
+- `RunState` (`scripts/run_state.gd`) : PV du personnage, énergie, carte, case actuelle. Un objet tenu par `Main` et donné à chaque salle ; il deviendra l'autoload `RunState` quand d'autres scènes (boutique, menus) en auront besoin.
+- `FloorMap` / `FloorRoom` (`scripts/floor/`) : génération de l'étage façon Isaac, portes = côtés reliés. Réglages dans `data/floors/*.tres` (`FloorData`).
+- `PathGenerator` (`scripts/floor/path_generator.gd`) : chemin des ennemis d'une salle, à partir de la graine de la salle (même chemin si on revient).
+- Une salle lancée seule (F6 sur `room_prototype.tscn`) crée son propre `RunState` et n'a pas de portes.
+
 ## Salle (prototype)
 
 ```
 Room (Node2D)
 ├── Floor / décor
-├── EnemyPath (Path2D)          chemin fixe de la salle
+├── EnemyPath (Path2D)          chemin généré au chargement (PathGenerator)
+├── Doors                       portes (door.tscn), une par côté relié
 ├── BuildSlots (Node2D)         emplacements constructibles (Marker2D)
 ├── Base                        PV, perdue si un ennemi l'atteint
 ├── WaveSpawner                 lit une liste de WaveData et instancie les ennemis
@@ -41,7 +55,7 @@ Room (Node2D)
 └── HUD (CanvasLayer)
 ```
 
-Ennemis : `PathFollow2D` le long de `EnemyPath` pour commencer. Plus tard, chemin généré selon des règles.
+Ennemis : `PathFollow2D` le long de `EnemyPath`. Les futurs volants ne suivront pas ce chemin (voir `docs/wiki/ennemis.md`).
 
 ## Pipeline de modificateurs (objets)
 
