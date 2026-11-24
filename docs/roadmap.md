@@ -33,13 +33,14 @@ Chaque étape = une PR testable avec F5.
 - [x] Personnage de base en données (`data/characters/base.tres`), stats visibles dans le HUD, départ avec l'Archer seul
 - [x] Trésor (objet gratuit) et boutique (objets, type de tour, soin) dans l'étage (7 salles), 11 objets de statistique
 - [x] Coût des tours en salle : +35 % par tour (au lieu de +30 %)
+- [x] Plus punitif : 3 PV, dégâts des ennemis ramenés à 1 (Brute 2 à la sortie), énergie au sol 6 s
 - [ ] Récompense annoncée sur la porte (objet, énergie, type de tour, soin)
 - [ ] Salle de boss (à concevoir : le cul-de-sac le plus éloigné lui est déjà réservé)
 - [ ] Liste des effets de statut et des archétypes d'ennemis validée par Vespper (`docs/wiki/effets.md`)
 
 ## Prochaine étape
 
-Test de Vespper (F5) : trésor et boutique, prix, effet des objets sur les stats affichées, difficulté avec l'Archer seul au départ. Puis concevoir la salle de boss, ou la récompense annoncée sur la porte.
+Test de Vespper (F5) : difficulté à 3 PV et énergie qui disparaît vite, trésor et boutique, prix, effet des objets sur les stats affichées, difficulté avec l'Archer seul au départ. Puis concevoir la salle de boss, ou la récompense annoncée sur la porte.
 
 ## Journal
 
@@ -52,3 +53,4 @@ Test de Vespper (F5) : trésor et boutique, prix, effet des objets sur les stats
 - 2026-11-24 : enchaînement de salles : étage de 5 salles, portes, chemin généré, PV et énergie conservés, mini-carte. Tests `test_run.gd` et `test_floor_and_paths.gd`. Liste d'effets et d'archétypes proposée dans le wiki (idées).
 - 2026-11-24 : économie resserrée après le test de Vespper (trop de tours dès la 2e salle).
 - 2026-11-24 : personnage de base en données avec stats affichées, trésor, boutique, 11 objets, étage de 7 salles, coût des tours +35 % par tour. Test `test_shop_and_treasure.gd`.
+- 2026-11-24 : jeu plus punitif : 3 PV, énergie au sol 6 s.

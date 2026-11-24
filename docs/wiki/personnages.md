@@ -6,13 +6,13 @@ Chaque personnage est un fichier `data/characters/*.tres` (`CharacterData`) : se
 
 ## Personnage de base (`base`)
 
-Statut : 🎮 En jeu (prototype). Volontairement un peu faible : il se renforce pendant le run.
+Statut : 🎮 En jeu (prototype). Volontairement fragile (3 PV, façon die and retry) : il se renforce pendant le run.
 
 | Stat | Nom dans les données | Valeur |
 |---|---|---|
 | Énergie de départ | `starting_energy` | 100 |
 | Types de tours de départ | `starting_towers` | Archer |
-| PV max | `max_health` | 20 |
+| PV max | `max_health` | 3 |
 | Vitesse | `speed` | 240 |
 | Invulnérabilité après un contact | `contact_invulnerability` | 1 s |
 | Ramassage de l'énergie (rayon) | `pickup_radius` | 90 |

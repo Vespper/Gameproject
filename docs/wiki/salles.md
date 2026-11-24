@@ -25,7 +25,7 @@ Salle grise du prototype :
 - Règles du chemin (`scripts/floor/path_generator.gd`) : segments horizontaux et verticaux sur une grille de 80 px, toujours vers la sortie, 2 à 4 virages espacés d'au moins 2 cases, longueur entre 1 400 et 2 000 px, entrée et sortie loin du milieu des murs (portes).
 - Une porte par côté relié sur la carte (1 à 4), avec le type de la salle derrière. Fermées dès qu'on entre dans un combat, ouvertes une fois la salle nettoyée.
 - 3 vagues courtes qui s'enchaînent seules (5 s de pause), environ 1 min de combat.
-- 100 d'énergie au départ ; les ennemis en lâchent, à ramasser.
+- 100 d'énergie au départ ; les ennemis en lâchent, à ramasser vite : elle disparaît au bout de 6 s (clignote les 2 dernières).
 - Chaque tour posée dans la salle augmente de 35 % le coût des suivantes (Archer : 40, 54, 68, 82…).
 - Victoire : tours démontées, 25 % de ce qu'elles ont coûté rendu en énergie.
 
@@ -53,6 +53,6 @@ Pas de combat, portes ouvertes. Quatre socles ; on achète en marchant dessus (r
 |---|---|
 | 2 objets du pool de l'étage | prix de l'objet (55 à 85, voir [Objets](objets.md)) |
 | 1 type de tour pas encore possédé (Givre ou Mortier) | `shop_price` de la tour (80 ou 100) |
-| Soin : +5 PV | 35 |
+| Soin : +1 PV | 40 |
 
 Réglages dans `data/floors/floor_01.tres` (`shop_item_count`, `shop_heal_amount`, `shop_heal_price`).

@@ -11,7 +11,7 @@ signal died
 # Stats : copiées depuis le RunState par apply_stats() (base du personnage + objets).
 # Les valeurs ci-dessous ne servent que si le personnage est utilisé sans run.
 var speed: float = 240.0
-var max_health: int = 20
+var max_health: int = 3
 var contact_invulnerability: float = 1.0
 var pickup_radius: float = 90.0
 var shot_damage: float = 8.0

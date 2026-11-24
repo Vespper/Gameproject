@@ -58,15 +58,15 @@ func _check_stats() -> void:
 	var state := RunState.create(BASE)
 	if state.tower_types.size() != 1 or state.tower_types[0] != ARCHER:
 		_errors.append("Départ : l'Archer doit être le seul type de tour")
-	if state.health != 20 or state.max_health != 20 or state.energy != 100:
+	if state.health != 3 or state.max_health != 3 or state.energy != 100:
 		_errors.append("Départ : PV %d/%d, énergie %d" % [state.health, state.max_health, state.energy])
 	state.add_item(SHARP_TIP)
 	if not is_equal_approx(state.stat(&"shot_damage"), 11.0):
 		_errors.append("Pointe affûtée : dégâts %.1f au lieu de 11" % state.stat(&"shot_damage"))
-	state.health = 10
+	state.health = 1
 	state.add_item(HEART)
-	if state.max_health != 24 or state.health != 14:
-		_errors.append("Cœur robuste : PV %d/%d au lieu de 14/24" % [state.health, state.max_health])
+	if state.max_health != 4 or state.health != 2:
+		_errors.append("Cœur robuste : PV %d/%d au lieu de 2/4" % [state.health, state.max_health])
 	state.add_item(TRIGGER)
 	if not is_equal_approx(state.stat(&"shot_cooldown"), 0.24) or state.stat_trend(&"shot_cooldown") != 1:
 		_errors.append("Gâchette rapide : recharge %.2f" % state.stat(&"shot_cooldown"))
@@ -122,7 +122,7 @@ func _open_room(type: FloorRoom.Type, energy: int) -> void:
 	if type == FloorRoom.Type.SHOP:
 		info.offers.append(RoomOffer.for_item(SHARP_TIP, SHARP_TIP.price))
 		info.offers.append(RoomOffer.for_item(HEART, HEART.price))
-		info.offers.append(RoomOffer.for_heal(5, 35))
+		info.offers.append(RoomOffer.for_heal(1, 40))
 		info.offers.append(RoomOffer.for_item(TRIGGER, TRIGGER.price))
 	else:
 		info.offers.append(RoomOffer.for_item(SHARP_TIP, 0))

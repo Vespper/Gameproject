@@ -101,7 +101,7 @@ Affiche les salles visitées et les salles voisines (avec l'icône de leur type)
 
 ## Questions ouvertes
 
-- Prix en énergie de l'atelier, quantité d'énergie gagnée par salle. Boutique (prototype) : objets 55 à 85, types de tours 80 à 100, soin de 5 PV à 35.
+- Prix en énergie de l'atelier, quantité d'énergie gagnée par salle. Boutique (prototype) : objets 55 à 85, types de tours 80 à 100, soin de 1 PV à 40.
 - Le soin du Repos : combien de PV ?
 - Peut-on revendre ou remplacer un type de tour en boutique, et contre combien ?
 - Mini-carte : le boss doit-il vraiment être visible dès le départ ?

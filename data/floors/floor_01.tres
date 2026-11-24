@@ -26,5 +26,5 @@ shop_rooms = 1
 item_pool = Array[ExtResource("2_item_data")]([ExtResource("item_frost_crystal"), ExtResource("item_lens"), ExtResource("item_light_boots"), ExtResource("item_magnet"), ExtResource("item_quick_trigger"), ExtResource("item_quiver"), ExtResource("item_recycling"), ExtResource("item_sharp_tip"), ExtResource("item_spyglass"), ExtResource("item_sturdy_heart"), ExtResource("item_whetstone")])
 shop_tower_pool = Array[ExtResource("3_tower_data")]([ExtResource("4_frost"), ExtResource("5_mortar")])
 shop_item_count = 2
-shop_heal_amount = 5
-shop_heal_price = 35
+shop_heal_amount = 1
+shop_heal_price = 40
