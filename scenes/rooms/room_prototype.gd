@@ -1,10 +1,16 @@
 extends Node2D
-## Prototype gris d'une salle : chemin fixe, sortie, tours posées librement hors du chemin,
-## vagues enchaînées, énergie. La salle relie les systèmes et gère l'état de la partie.
+## Prototype gris d'une salle : chemin généré, sortie, tours posées librement hors du chemin,
+## vagues enchaînées, énergie, portes. La salle relie les systèmes et gère l'état de la salle.
+## Lancée seule (F6), elle se suffit à elle-même ; dans un run, la scène principale lui donne
+## l'état du run (PV, énergie), sa place sur la carte et ses portes.
+
+## Le personnage passe une porte ouverte. direction : côté de la salle (Vector2i.LEFT…).
+signal door_entered(direction: Vector2i)
 
 @export var tower_types: Array[TowerData] = []
 @export var tower_scene: PackedScene
 @export var pickup_scene: PackedScene
+@export var door_scene: PackedScene
 @export var start_energy: int = 100
 ## Part du coût des tours rendue quand elles sont démontées en fin de salle.
 @export_range(0.0, 1.0) var tower_refund_ratio: float = 0.5
@@ -17,11 +23,35 @@ extends Node2D
 ## Contour de la salle : sol, zone de déplacement du personnage et zone constructible.
 @export var room_rect := Rect2(160.0, 80.0, 960.0, 520.0)
 
-var energy: int = 0
+@export_group("Chemin")
+## Graine du chemin quand la salle est lancée seule (0 = au hasard).
+@export var path_seed: int = 0
+## Taille d'une case de la grille du chemin.
+@export var path_cell: float = 80.0
+@export var path_min_length: float = 1400.0
+@export var path_max_length: float = 2000.0
+
+## État du run (donné par la scène principale avant l'ajout à l'arbre). Créé si la salle est seule.
+var run_state: RunState
+## Place de la salle sur la carte, ou null si la salle est lancée seule.
+var room_info: FloorRoom
+## Portes : côté (Vector2i) -> texte affiché devant la porte.
+var door_labels: Dictionary = {}
+## Côté par lequel le personnage arrive (Vector2i.ZERO : position de départ de la scène).
+var entry_side: Vector2i = Vector2i.ZERO
+
+var energy: int:
+	get:
+		return run_state.energy
+	set(value):
+		run_state.energy = value
 ## Type de tour en cours de pose, ou -1 si le personnage est en mode tir.
 var build_selection: int = -1
 
 var _game_over: bool = false
+var _cleared: bool = false
+var _leaving: bool = false
+var _doors: Array[Door] = []
 
 @onready var _enemy_path: Path2D = $EnemyPath
 @onready var _path_line: Line2D = $EnemyPath/PathLine
@@ -34,10 +64,14 @@ var _game_over: bool = false
 @onready var _effects: Node2D = $Effects
 @onready var _player: Player = $Player
 @onready var _hud: Hud = $Hud
+@onready var _door_parent: Node2D = $Doors
 
 
 func _ready() -> void:
-	energy = start_energy
+	if run_state == null:
+		run_state = RunState.new()
+		run_state.energy = start_energy
+	_generate_path()
 	var curve: Curve2D = _enemy_path.curve
 	_path_line.points = curve.get_baked_points()
 	_base.global_position = _enemy_path.to_global(curve.get_point_position(curve.point_count - 1))
@@ -45,6 +79,8 @@ func _ready() -> void:
 	_player.bounds = room_rect.grow(-16.0)
 	$Floor.position = room_rect.position
 	$Floor.size = room_rect.size
+	_setup_player_health()
+	_create_doors()
 
 	_spawner.enemy_spawned.connect(_on_enemy_spawned)
 	_spawner.wave_started.connect(_on_wave_started)
@@ -54,7 +90,17 @@ func _ready() -> void:
 	_hud.start_wave_pressed.connect(_start_waves)
 	_overlay.draw.connect(_draw_overlay)
 
-	_hud.show_message("Pose tes tours (1, 2, 3), puis lance les vagues")
+	if has_combat():
+		_hud.show_message("Pose tes tours (1, 2, 3), puis lance les vagues")
+	else:
+		_cleared = true
+		_set_doors_open(true)
+		if room_info.type == FloorRoom.Type.START:
+			# Salle de départ vide : ni chemin ni sortie
+			_enemy_path.visible = false
+			_base.visible = false
+		_hud.show_message("Choisis une porte" if room_info.type == FloorRoom.Type.START else "Salle déjà nettoyée")
+		get_tree().create_timer(2.0).timeout.connect(func() -> void: _hud.show_message(""))
 	_refresh_hud()
 
 
@@ -62,10 +108,11 @@ func _process(_delta: float) -> void:
 	_hud.set_spell(_player.spell_time_left)
 	_hud.set_next_wave(_spawner.time_until_next_wave(), _spawner.current_wave + 2)
 	_overlay.queue_redraw()
+	_check_doors()
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if _game_over:
+	if _game_over or _cleared:
 		return
 	for i in tower_types.size():
 		if event.is_action_pressed("select_tower_%d" % (i + 1)):
@@ -82,9 +129,27 @@ func _unhandled_input(event: InputEvent) -> void:
 			get_viewport().set_input_as_handled()
 
 
+## Vrai si la salle a des vagues à jouer (pas une salle de départ ni une salle déjà nettoyée).
+func has_combat() -> bool:
+	return room_info == null or room_info.has_combat()
+
+
+## Vrai une fois les vagues battues (ou d'office pour une salle sans combat).
+func is_cleared() -> bool:
+	return _cleared
+
+
+func is_game_over() -> bool:
+	return _game_over
+
+
+func get_doors() -> Array[Door]:
+	return _doors
+
+
 ## Pose une tour du type donné. Renvoie vrai si elle a été posée.
 func try_build(type_index: int, at: Vector2) -> bool:
-	if type_index < 0 or type_index >= tower_types.size():
+	if _cleared or type_index < 0 or type_index >= tower_types.size():
 		return false
 	var tower_data: TowerData = tower_types[type_index]
 	if energy < tower_data.cost or not can_build_at(at):
@@ -108,6 +173,9 @@ func can_build_at(at: Vector2) -> bool:
 		return false
 	if at.distance_to(_base.global_position) < 60.0:
 		return false
+	for door in _doors:
+		if at.distance_to(door.global_position) < 80.0:
+			return false
 	for tower in _towers.get_children():
 		if (tower as Node2D).global_position.distance_to(at) < min_distance_between_towers:
 			return false
@@ -122,7 +190,7 @@ func _set_build_selection(index: int) -> void:
 
 
 func _start_waves() -> void:
-	if _game_over or _spawner.has_started():
+	if _game_over or _cleared or _spawner.has_started():
 		return
 	_spawner.start()
 
@@ -133,9 +201,10 @@ func _add_energy(amount: int) -> void:
 
 
 func _refresh_hud() -> void:
-	_hud.set_stats(_player.health, _player.max_health, energy, _spawner.current_wave + 1, _spawner.waves.size())
+	var wave_total: int = _spawner.waves.size() if has_combat() else 0
+	_hud.set_stats(_player.health, _player.max_health, energy, _spawner.current_wave + 1, wave_total)
 	_hud.set_towers(tower_types, build_selection, energy)
-	_hud.set_wave_button(not _game_over and not _spawner.has_started())
+	_hud.set_wave_button(not _game_over and not _cleared and not _spawner.has_started())
 
 
 func _on_enemy_spawned(enemy: Enemy) -> void:
@@ -170,7 +239,19 @@ func _on_all_waves_cleared() -> void:
 	if _game_over:
 		return
 	var refund := _dismantle_towers()
-	_end_game("Victoire !  Tours démontées : +%d énergie\n(R pour recommencer)" % refund)
+	_cleared = true
+	_set_build_selection(-1)
+	if room_info != null:
+		room_info.cleared = true
+	_set_doors_open(true)
+	var next_step: String = "Passe une porte" if not _doors.is_empty() else "R pour recommencer"
+	_hud.show_message("Salle nettoyée !  Tours démontées : +%d énergie\n%s" % [refund, next_step])
+	get_tree().create_timer(3.0).timeout.connect(func() -> void:
+		if not _game_over and not _leaving:
+			_hud.show_message("")
+	)
+	print("Salle nettoyée, tours démontées : +%d énergie" % refund)
+	_refresh_hud()
 
 
 ## Détruit toutes les tours et rend une part de leur coût. Renvoie l'énergie rendue.
@@ -187,7 +268,7 @@ func _dismantle_towers() -> int:
 
 
 func _on_player_died() -> void:
-	_end_game("Défaite… tu n'as plus de PV  (R pour recommencer)")
+	_end_game("Défaite… tu n'as plus de PV  (R pour recommencer un run)")
 
 
 func _end_game(message: String) -> void:
@@ -198,10 +279,74 @@ func _end_game(message: String) -> void:
 	get_tree().paused = true
 
 
+func _generate_path() -> void:
+	var rng := RandomNumberGenerator.new()
+	if room_info != null:
+		rng.seed = room_info.path_seed
+	elif path_seed != 0:
+		rng.seed = path_seed
+	else:
+		rng.randomize()
+	var points: PackedVector2Array = PathGenerator.generate(
+		rng, room_rect, path_cell, path_min_length, path_max_length)
+	var curve := Curve2D.new()
+	for point in points:
+		curve.add_point(_enemy_path.to_local(point))
+	_enemy_path.curve = curve
+
+
+func _setup_player_health() -> void:
+	if run_state.max_health < 0:
+		run_state.max_health = _player.max_health
+		run_state.health = _player.max_health
+	_player.max_health = run_state.max_health
+	_player.health = run_state.health
+	_player.health_changed.connect(func(current: int, _maximum: int) -> void: run_state.health = current)
+	if entry_side != Vector2i.ZERO:
+		_player.global_position = _door_position(entry_side) - Vector2(entry_side) * 72.0
+
+
+func _create_doors() -> void:
+	for side: Vector2i in door_labels:
+		var door := door_scene.instantiate() as Door
+		door.direction = side
+		door.label = door_labels[side]
+		_door_parent.add_child(door)
+		door.global_position = _door_position(side)
+		_doors.append(door)
+	_set_doors_open(false)
+
+
+## Milieu du mur de ce côté de la salle.
+func _door_position(side: Vector2i) -> Vector2:
+	var center: Vector2 = room_rect.get_center()
+	var half: Vector2 = room_rect.size / 2.0
+	return center + Vector2(side) * half
+
+
+func _set_doors_open(value: bool) -> void:
+	for door in _doors:
+		door.set_open(value)
+
+
+func _check_doors() -> void:
+	if _leaving or not _cleared or _game_over:
+		return
+	for door in _doors:
+		if door.is_open and door.contains(_player.global_position):
+			_leaving = true
+			door_entered.emit(door.direction)
+			return
+
+
 func _draw_overlay() -> void:
 	# Entrée des ennemis
-	var start: Vector2 = _enemy_path.to_global(_enemy_path.curve.get_point_position(0))
-	_overlay.draw_circle(start + Vector2(24.0, 0.0), 14.0, Color(0.8, 0.2, 0.2, 0.6))
+	if not _enemy_path.visible:
+		return
+	var curve: Curve2D = _enemy_path.curve
+	var start: Vector2 = _enemy_path.to_global(curve.get_point_position(0))
+	var inward: Vector2 = start.direction_to(_enemy_path.to_global(curve.get_point_position(1)))
+	_overlay.draw_circle(start + inward * 24.0, 14.0, Color(0.8, 0.2, 0.2, 0.6))
 
 	# Aperçu de la tour en cours de pose : vert si possible, rouge sinon
 	if _game_over or build_selection < 0:

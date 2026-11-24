@@ -1,6 +1,7 @@
 class_name Hud
 extends CanvasLayer
 ## Interface de la salle. Reste active pendant la pause pour permettre de recommencer.
+## wave_total = 0 : salle sans vagues, le compteur est masqué.
 
 signal start_wave_pressed
 
@@ -25,9 +26,9 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func set_stats(health: int, max_health: int, energy: int, wave_number: int, wave_total: int) -> void:
-	_stats_label.text = "PV : %d / %d     Énergie : %d     Vague : %d / %d" % [
-		health, max_health, energy, wave_number, wave_total
-	]
+	_stats_label.text = "PV : %d / %d     Énergie : %d" % [health, max_health, energy]
+	if wave_total > 0:
+		_stats_label.text += "     Vague : %d / %d" % [wave_number, wave_total]
 
 
 ## selected : type de tour en cours de pose, ou -1.

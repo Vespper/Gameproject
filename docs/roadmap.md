@@ -6,7 +6,7 @@ Mise à jour à chaque fin de session (skill `fin-de-session`). Garder ce fichie
 
 1. ✅ Mise en place du projet Godot
 2. ✱ **Prototype gris d'une salle** (en cours) — question : jouer le personnage pendant la vague est-il amusant ?
-3. ⬜ Plusieurs salles : portes, passage d'une salle à l'autre, récompense annoncée sur la porte
+3. ✱ Plusieurs salles : portes, passage d'une salle à l'autre, récompense annoncée sur la porte
 4. ⬜ Mini-run : un étage de 8 à 10 salles, 3 types de salles (combat, boutique, boss), 10 à 15 objets avec quelques synergies — question : a-t-on envie de relancer ?
 5. ⬜ Vertical slice : un étage complet avec le style final, sons, interface, un boss
 6. ⬜ Production : 3 à 4 étages, 60 à 100 objets, plusieurs personnages, méta-progression
@@ -24,9 +24,17 @@ Chaque étape = une PR testable avec F5.
 - [x] 3 types de tours, 3 types d'ennemis, 1 sort à recharge pour le personnage
 - [ ] Session de test : noter le ressenti dans `docs/decisions.md`
 
+## Jalon 3 — plusieurs salles
+
+- [x] Étage généré (5 salles pour l'instant), portes visibles en entrant (1 à 4), passage d'une salle à l'autre, mini-carte
+- [x] Chemin des ennemis généré au hasard dans chaque salle
+- [x] PV et énergie conservés d'une salle à l'autre
+- [ ] Récompense annoncée sur la porte (objet, énergie, type de tour, soin)
+- [ ] Liste des effets de statut et des archétypes d'ennemis validée par Vespper (`docs/wiki/effets.md`)
+
 ## Prochaine étape
 
-Session de test de Vespper sur le prototype (F5) : noter le ressenti dans `docs/decisions.md`, puis équilibrer (les .tres dans `data/`).
+Test de Vespper (F5) sur l'enchaînement de salles : chemins générés lisibles et jouables ? Portes fermées en combat (comme Isaac) ou sortie possible avant de lancer les vagues ? Puis valider la liste des effets (`docs/wiki/effets.md`) et ajouter la récompense annoncée sur la porte.
 
 ## Journal
 
@@ -37,3 +45,4 @@ Session de test de Vespper sur le prototype (F5) : noter le ressenti dans `docs/
 - 2026-11-23 : salle plus petite (960 × 520, chemin ~25 % plus court), personnage de départ affaibli.
 - 2026-11-23 : carte d'étage conçue (`docs/design/map.md`) : génération façon Isaac, salles par étage, énergie seule monnaie, 3 emplacements de types de tours.
 - 2026-11-23 : chemins de la machine retirés du dépôt (fichiers locaux ignorés), scripts `tools/check.sh`, `tools/test.sh`, `tools/run.sh`.
+- 2026-11-24 : enchaînement de salles : étage de 5 salles, portes, chemin généré, PV et énergie conservés, mini-carte. Tests `test_run.gd` et `test_floor_and_paths.gd`. Liste d'effets et d'archétypes proposée dans le wiki (idées).
