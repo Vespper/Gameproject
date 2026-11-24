@@ -8,3 +8,4 @@ display_name = "Rôdeur"
 max_health = 40.0
 speed = 85.0
 radius = 13.0
+energy_drop = 5

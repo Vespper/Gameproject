@@ -82,7 +82,7 @@ func _build(elapsed: float) -> void:
 	var type_index: int = BUILD_TYPES[_build_step]
 	var tower_types: Array[TowerData] = room.get("tower_types")
 	var tower: TowerData = tower_types[type_index]
-	if int(room.get("energy")) < tower.cost:
+	if int(room.get("energy")) < int(room.call("tower_cost", type_index)):
 		return
 	for at in _candidates:
 		if room.call("try_build", type_index, at):

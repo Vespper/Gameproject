@@ -10,7 +10,7 @@ Les objets peuvent tout modifier : personnage, tours, environnement, ennemis. Tr
 | Contagion | 💡 Idée | Synergie | Les ennemis empoisonnés explosent en mourant |
 | Aimant | 💡 Idée | Statistique | Rayon de ramassage de l'énergie doublé |
 | Carte du cartographe | 💡 Idée | Comportement | Révèle tout l'étage sur la mini-carte, salle secrète comprise |
-| Recyclage | 💡 Idée | Statistique | Les tours démontées rendent 75 % au lieu de 50 % |
+| Recyclage | 💡 Idée | Statistique | Les tours démontées rendent 50 % au lieu de 25 % |
 
 ## Questions ouvertes
 

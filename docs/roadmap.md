@@ -29,6 +29,7 @@ Chaque étape = une PR testable avec F5.
 - [x] Étage généré (5 salles pour l'instant), portes visibles en entrant (1 à 4), passage d'une salle à l'autre, mini-carte
 - [x] Chemin des ennemis généré au hasard dans chaque salle
 - [x] PV et énergie conservés d'une salle à l'autre
+- [x] Économie resserrée : remboursement 25 %, moins d'énergie par ennemi, coût +30 % par tour posée dans la salle
 - [ ] Récompense annoncée sur la porte (objet, énergie, type de tour, soin)
 - [ ] Liste des effets de statut et des archétypes d'ennemis validée par Vespper (`docs/wiki/effets.md`)
 
@@ -46,3 +47,4 @@ Test de Vespper (F5) sur l'enchaînement de salles : chemins générés lisibles
 - 2026-11-23 : carte d'étage conçue (`docs/design/map.md`) : génération façon Isaac, salles par étage, énergie seule monnaie, 3 emplacements de types de tours.
 - 2026-11-23 : chemins de la machine retirés du dépôt (fichiers locaux ignorés), scripts `tools/check.sh`, `tools/test.sh`, `tools/run.sh`.
 - 2026-11-24 : enchaînement de salles : étage de 5 salles, portes, chemin généré, PV et énergie conservés, mini-carte. Tests `test_run.gd` et `test_floor_and_paths.gd`. Liste d'effets et d'archétypes proposée dans le wiki (idées).
+- 2026-11-24 : économie resserrée après le test de Vespper (trop de tours dès la 2e salle).

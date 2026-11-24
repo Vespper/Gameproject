@@ -81,7 +81,8 @@ L'énergie est **la seule monnaie du run** (l'or est abandonné). Elle sert à t
 
 - On la gagne en ramassant ce que lâchent les ennemis (un peu risqué), et via les récompenses « énergie ».
 - Elle suit le joueur d'une salle à l'autre.
-- Les tours posées sont démontées à la fin de la salle et rendent 50 % de leur coût.
+- Les tours posées sont démontées à la fin de la salle et rendent 25 % de ce qu'elles ont coûté.
+- Dans une salle, chaque tour posée rend les suivantes 30 % plus chères (le compteur repart à zéro à la salle suivante).
 
 La tension voulue : chaque tour posée protège maintenant, mais coûte la moitié de son prix à la boutique et à l'atelier. Une salle facile se joue en économisant, une salle dure en investissant. La carte ajoute un second arbitrage : faire un combat de plus pour gagner de l'énergie, ou l'éviter pour garder ses PV.
 

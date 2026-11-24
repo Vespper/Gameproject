@@ -26,7 +26,8 @@ Salle grise du prototype :
 - Une porte par côté relié sur la carte (1 à 4), avec le type de la salle derrière. Fermées dès qu'on entre dans un combat, ouvertes une fois la salle nettoyée.
 - 3 vagues courtes qui s'enchaînent seules (5 s de pause), environ 1 min de combat.
 - 100 d'énergie au départ ; les ennemis en lâchent, à ramasser.
-- Victoire : tours démontées, 50 % de leur coût rendu en énergie.
+- Chaque tour posée dans la salle augmente de 30 % le coût des suivantes (Archer : 40, 52, 64, 76…).
+- Victoire : tours démontées, 25 % de ce qu'elles ont coûté rendu en énergie.
 
 | Vague | Contenu (`data/waves/`) |
 |---|---|
