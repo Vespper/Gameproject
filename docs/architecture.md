@@ -35,8 +35,10 @@ Main (Node2D)                   tient le run : génère l'étage, remplace la sa
 └── MinimapLayer/Minimap
 ```
 
-- `RunState` (`scripts/run_state.gd`) : PV du personnage, énergie, carte, case actuelle. Un objet tenu par `Main` et donné à chaque salle ; il deviendra l'autoload `RunState` quand d'autres scènes (boutique, menus) en auront besoin.
-- `FloorMap` / `FloorRoom` (`scripts/floor/`) : génération de l'étage façon Isaac, portes = côtés reliés. Réglages dans `data/floors/*.tres` (`FloorData`).
+- `RunState` (`scripts/run_state.gd`) : personnage (`CharacterData`), objets, types de tours possédés, PV, énergie, carte, case actuelle. `stat(nom)` donne une stat finale du personnage = (base + somme des `add`) × produit des `multiply` des objets ; `tower_stats(tour)` donne une copie de la tour avec les bonus d'objets. Le personnage (`Player.apply_stats`) recopie ces stats à l'entrée de chaque salle et après chaque objet. Un objet tenu par `Main` et donné à chaque salle ; il deviendra l'autoload `RunState` quand d'autres scènes (boutique, menus) en auront besoin.
+- `FloorMap` / `FloorRoom` (`scripts/floor/`) : génération de l'étage façon Isaac, portes = côtés reliés, trésor et boutique dans les culs-de-sac, puis `fill_rooms` qui pose leurs articles (`RoomOffer`). Réglages dans `data/floors/*.tres` (`FloorData`).
+- Données : `data/characters/` (`CharacterData`), `data/items/` (`ItemData` + `StatModifier`), `data/towers/`, `data/enemies/`, `data/waves/`, `data/floors/`.
+- Trésor et boutique : la même scène de salle sans chemin ni vagues, avec des socles (`scenes/rooms/pedestal.tscn`) ; on prend un article en marchant dessus.
 - `PathGenerator` (`scripts/floor/path_generator.gd`) : chemin des ennemis d'une salle, à partir de la graine de la salle (même chemin si on revient).
 - Une salle lancée seule (F6 sur `room_prototype.tscn`) crée son propre `RunState` et n'a pas de portes.
 

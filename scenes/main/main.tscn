@@ -1,14 +1,16 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene load_steps=6 format=3]
 
 [ext_resource type="Script" path="res://scenes/main/main.gd" id="1_main"]
 [ext_resource type="PackedScene" path="res://scenes/rooms/room_prototype.tscn" id="2_room"]
 [ext_resource type="Resource" path="res://data/floors/floor_01.tres" id="3_floor"]
 [ext_resource type="PackedScene" path="res://scenes/ui/minimap.tscn" id="4_minimap"]
+[ext_resource type="Resource" path="res://data/characters/base.tres" id="5_character"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_main")
 room_scene = ExtResource("2_room")
 floor_data = ExtResource("3_floor")
+character = ExtResource("5_character")
 
 [node name="MinimapLayer" type="CanvasLayer" parent="."]
 layer = 2

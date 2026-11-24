@@ -4,9 +4,10 @@ extends Node2D
 
 @export var room_scene: PackedScene
 @export var floor_data: FloorData
+## Personnage joué : stats de base, énergie et tours de départ.
+@export var character: CharacterData
 ## Graine du run (0 = au hasard). La même graine redonne le même étage et les mêmes chemins.
 @export var run_seed: int = 0
-@export var start_energy: int = 100
 
 var run_state: RunState
 
@@ -21,10 +22,15 @@ func _ready() -> void:
 		rng.seed = run_seed
 	else:
 		rng.randomize()
-	run_state = RunState.new()
+	run_state = RunState.create(character)
 	run_state.seed_value = int(rng.seed)
-	run_state.energy = start_energy
-	run_state.floor_map = FloorMap.generate(rng, floor_data.room_count, floor_data.grid_size)
+	var specials: Array[FloorRoom.Type] = []
+	for i in floor_data.treasure_rooms:
+		specials.append(FloorRoom.Type.TREASURE)
+	for i in floor_data.shop_rooms:
+		specials.append(FloorRoom.Type.SHOP)
+	run_state.floor_map = FloorMap.generate(rng, floor_data.room_count, floor_data.grid_size, specials)
+	run_state.floor_map.fill_rooms(rng, floor_data, run_state.tower_types)
 	print("Graine du run : %d — %d salles" % [run_state.seed_value, run_state.floor_map.rooms.size()])
 	enter_room(run_state.floor_map.start, Vector2i.ZERO)
 
@@ -51,7 +57,7 @@ func enter_room(cell: Vector2i, entry_side: Vector2i) -> void:
 	var labels: Dictionary = {}
 	for side in floor_map.doors_of(cell):
 		var neighbor: FloorRoom = floor_map.room_at(cell + side)
-		labels[side] = neighbor.display_name() + (" (nettoyée)" if neighbor.visited and neighbor.cleared and neighbor.type == FloorRoom.Type.COMBAT else "")
+		labels[side] = neighbor.door_label()
 	room.set("door_labels", labels)
 	room.connect("door_entered", func(side: Vector2i) -> void:
 		enter_room.call_deferred(cell + side, -side)

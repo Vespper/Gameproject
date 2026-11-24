@@ -1,0 +1,29 @@
+[gd_resource type="Resource" script_class="CharacterData" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/character_data.gd" id="1_character"]
+[ext_resource type="Script" path="res://scripts/data/tower_data.gd" id="2_tower_data"]
+[ext_resource type="Resource" path="res://data/towers/archer.tres" id="3_archer"]
+
+[resource]
+script = ExtResource("1_character")
+display_name = "Personnage de base"
+starting_energy = 100
+starting_towers = Array[ExtResource("2_tower_data")]([ExtResource("3_archer")])
+max_health = 20
+speed = 240.0
+contact_invulnerability = 1.0
+pickup_radius = 90.0
+shot_damage = 8.0
+shot_cooldown = 0.3
+shot_speed = 750.0
+shot_range = 360.0
+spell_damage = 20.0
+spell_radius = 130.0
+spell_slow_factor = 0.4
+spell_slow_duration = 2.5
+spell_cooldown = 8.0
+tower_damage = 1.0
+tower_fire_rate = 1.0
+tower_range = 1.0
+tower_refund = 0.25
+tower_slots = 3

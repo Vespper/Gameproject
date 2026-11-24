@@ -1,10 +1,8 @@
-[gd_scene load_steps=18 format=3]
+[gd_scene load_steps=16 format=3]
 
 [ext_resource type="Script" path="res://scenes/rooms/room_prototype.gd" id="1_room"]
-[ext_resource type="Script" path="res://scripts/data/tower_data.gd" id="2_tower_data"]
-[ext_resource type="Resource" path="res://data/towers/archer.tres" id="3_archer"]
-[ext_resource type="Resource" path="res://data/towers/mortar.tres" id="4_mortar"]
-[ext_resource type="Resource" path="res://data/towers/frost.tres" id="5_frost"]
+[ext_resource type="Resource" path="res://data/characters/base.tres" id="2_character"]
+[ext_resource type="PackedScene" path="res://scenes/rooms/pedestal.tscn" id="3_pedestal"]
 [ext_resource type="PackedScene" path="res://scenes/towers/tower.tscn" id="6_tower"]
 [ext_resource type="PackedScene" path="res://scenes/pickups/energy_pickup.tscn" id="7_pickup"]
 [ext_resource type="PackedScene" path="res://scenes/rooms/base.tscn" id="8_base"]
@@ -20,10 +18,11 @@
 
 [node name="RoomPrototype" type="Node2D"]
 script = ExtResource("1_room")
-tower_types = Array[ExtResource("2_tower_data")]([ExtResource("3_archer"), ExtResource("4_mortar"), ExtResource("5_frost")])
+character = ExtResource("2_character")
 tower_scene = ExtResource("6_tower")
 pickup_scene = ExtResource("7_pickup")
 door_scene = ExtResource("17_door")
+pedestal_scene = ExtResource("3_pedestal")
 
 [node name="Floor" type="ColorRect" parent="."]
 offset_left = 160.0

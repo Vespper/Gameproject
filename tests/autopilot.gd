@@ -2,7 +2,8 @@ extends RefCounted
 ## « Joueur automatique » partagé par les tests : pose des tours aux meilleurs endroits
 ## autour du chemin (généré au hasard), ramasse l'énergie et tire sur l'ennemi le plus avancé.
 
-## Ordre des types de tours à poser (index dans tower_types).
+## Ordre des types de tours à poser (index dans tower_types ; un type pas encore possédé
+## est remplacé par le premier, l'Archer).
 const BUILD_TYPES := [0, 0, 1, 2, 0, 0, 1, 2, 0, 0, 1, 0]
 
 var room: Node2D
@@ -79,8 +80,10 @@ func _rank_candidates() -> void:
 func _build(elapsed: float) -> void:
 	if _build_step >= BUILD_TYPES.size():
 		return
-	var type_index: int = BUILD_TYPES[_build_step]
 	var tower_types: Array[TowerData] = room.get("tower_types")
+	var type_index: int = BUILD_TYPES[_build_step]
+	if type_index >= tower_types.size():
+		type_index = 0
 	var tower: TowerData = tower_types[type_index]
 	if int(room.get("energy")) < int(room.call("tower_cost", type_index)):
 		return

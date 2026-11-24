@@ -30,16 +30,19 @@ Chaque étape = une PR testable avec F5.
 - [x] Chemin des ennemis généré au hasard dans chaque salle
 - [x] PV et énergie conservés d'une salle à l'autre
 - [x] Économie resserrée : remboursement 25 %, moins d'énergie par ennemi, coût +30 % par tour posée dans la salle
+- [x] Personnage de base en données (`data/characters/base.tres`), stats visibles dans le HUD, départ avec l'Archer seul
+- [x] Trésor (objet gratuit) et boutique (objets, type de tour, soin) dans l'étage (7 salles), 11 objets de statistique
+- [x] Coût des tours en salle : +35 % par tour (au lieu de +30 %)
 - [ ] Récompense annoncée sur la porte (objet, énergie, type de tour, soin)
+- [ ] Salle de boss (à concevoir : le cul-de-sac le plus éloigné lui est déjà réservé)
 - [ ] Liste des effets de statut et des archétypes d'ennemis validée par Vespper (`docs/wiki/effets.md`)
 
 ## Prochaine étape
 
-Test de Vespper (F5) sur l'enchaînement de salles : chemins générés lisibles et jouables ? Puis valider la liste des effets (`docs/wiki/effets.md`) et ajouter la récompense annoncée sur la porte.
+Test de Vespper (F5) : trésor et boutique, prix, effet des objets sur les stats affichées, difficulté avec l'Archer seul au départ. Puis concevoir la salle de boss, ou la récompense annoncée sur la porte.
 
 ## Journal
 
-- 2026-11-23 : projet Godot créé (PR #1), documentation et agents en place.
 - 2026-11-23 : prototype gris jouable d'une salle (chemin, base, 3 tours, 3 ennemis, 3 vagues, énergie à ramasser, mêlée + onde de givre). Test automatique : `tests/test_room_prototype.gd`.
 - 2026-11-23 : retours de Vespper intégrés (vagues enchaînées, tir à distance, PV du personnage, pose libre, plus d'ennemis).
 - 2026-11-23 : salle raccourcie (3 vagues courtes, ~45 s pour un joueur parfait), tours démontées en fin de salle avec 50 % du coût rendu.
@@ -48,3 +51,4 @@ Test de Vespper (F5) sur l'enchaînement de salles : chemins générés lisibles
 - 2026-11-23 : chemins de la machine retirés du dépôt (fichiers locaux ignorés), scripts `tools/check.sh`, `tools/test.sh`, `tools/run.sh`.
 - 2026-11-24 : enchaînement de salles : étage de 5 salles, portes, chemin généré, PV et énergie conservés, mini-carte. Tests `test_run.gd` et `test_floor_and_paths.gd`. Liste d'effets et d'archétypes proposée dans le wiki (idées).
 - 2026-11-24 : économie resserrée après le test de Vespper (trop de tours dès la 2e salle).
+- 2026-11-24 : personnage de base en données avec stats affichées, trésor, boutique, 11 objets, étage de 7 salles, coût des tours +35 % par tour. Test `test_shop_and_treasure.gd`.

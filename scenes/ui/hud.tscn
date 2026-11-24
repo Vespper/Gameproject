@@ -14,6 +14,23 @@ offset_bottom = 40.0
 theme_override_font_sizes/font_size = 20
 text = "PV : 20 / 20"
 
+[node name="CharacterLabel" type="Label" parent="."]
+offset_left = 14.0
+offset_top = 232.0
+offset_right = 158.0
+offset_bottom = 600.0
+theme_override_colors/font_color = Color(0.85, 0.85, 0.9, 1)
+theme_override_font_sizes/font_size = 13
+
+[node name="ItemsLabel" type="Label" parent="."]
+offset_left = 1128.0
+offset_top = 80.0
+offset_right = 1276.0
+offset_bottom = 600.0
+theme_override_colors/font_color = Color(0.85, 0.85, 0.9, 1)
+theme_override_font_sizes/font_size = 13
+autowrap_mode = 3
+
 [node name="SpellLabel" type="Label" parent="."]
 offset_left = 16.0
 offset_top = 42.0
