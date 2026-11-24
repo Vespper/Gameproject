@@ -17,5 +17,5 @@ extends Resource
 ## Types de tours qu'on peut acheter en boutique (seulement ceux qu'on n'a pas).
 @export var shop_tower_pool: Array[TowerData] = []
 @export var shop_item_count: int = 2
-@export var shop_heal_amount: int = 5
-@export var shop_heal_price: int = 35
+@export var shop_heal_amount: int = 1
+@export var shop_heal_price: int = 40

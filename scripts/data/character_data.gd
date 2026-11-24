@@ -12,7 +12,7 @@ extends Resource
 @export var starting_towers: Array[TowerData] = []
 
 @export_group("Corps")
-@export var max_health: int = 20
+@export var max_health: int = 3
 @export var speed: float = 240.0
 ## Secondes d'invulnérabilité après un contact avec un ennemi.
 @export var contact_invulnerability: float = 1.0

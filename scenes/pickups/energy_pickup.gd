@@ -4,7 +4,10 @@ extends Node2D
 
 signal collected(amount: int)
 
-@export var lifetime: float = 12.0
+## Secondes avant disparition : court, pour obliger à aller la chercher pendant le combat.
+@export var lifetime: float = 6.0
+## Clignote pendant ces dernières secondes.
+@export var blink_time: float = 2.0
 @export var magnet_speed: float = 520.0
 
 var amount: int = 5
@@ -34,8 +37,7 @@ func _process(delta: float) -> void:
 
 
 func _draw() -> void:
-	# Clignote pendant les 3 dernières secondes
-	if _time_left < 3.0 and fmod(_time_left, 0.3) < 0.15:
+	if _time_left < blink_time and fmod(_time_left, 0.3) < 0.15:
 		return
 	var size: float = 6.0 + minf(amount, 25) * 0.2
 	var points := PackedVector2Array([

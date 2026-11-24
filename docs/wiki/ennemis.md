@@ -2,13 +2,13 @@
 
 Rôles lisibles : chaque ennemi a une forme et une couleur propres. Stats 🎮 recopiées de `data/enemies/*.tres` (prototype).
 
-« Dégâts sortie » : PV perdus par le personnage quand l'ennemi atteint la sortie. « Contact » : PV perdus au contact du personnage.
+« Dégâts sortie » : PV perdus par le personnage quand l'ennemi atteint la sortie. « Contact » : PV perdus au contact du personnage (sur 3 PV au départ : chaque point compte).
 
 | Ennemi | Statut | Rôle | PV | Vitesse | Dégâts sortie | Contact | Énergie lâchée | Forme |
 |---|---|---|---|---|---|---|---|---|
 | Rôdeur (`grunt`) | 🎮 En jeu | Ennemi de base | 40 | 85 | 1 | 1 | 5 | Cercle rouge |
 | Coureur (`runner`) | 🎮 En jeu | Rapide et fragile | 18 | 160 | 1 | 1 | 3 | Triangle orange |
-| Brute (`brute`) | 🎮 En jeu | Lent et résistant | 150 | 60 | 3 | 2 | 15 | Carré violet |
+| Brute (`brute`) | 🎮 En jeu | Lent et résistant | 150 | 60 | 2 | 1 | 15 | Carré violet |
 | Volant | 💡 Idée | Ne suit pas le chemin : vole en ligne droite (ou en légère vague) de l'entrée à la sortie, donc plus court. Insensible aux effets au sol (graisse, flaques). Certaines tours ne peuvent pas le toucher (mortier ?) | — | — | — | — | — | — |
 | Diviseur | 💡 Idée | Se sépare en petits ennemis à sa mort | — | — | — | — | — | — |
 | Soigneur | 💡 Idée | Soigne les ennemis proches | — | — | — | — | — | — |

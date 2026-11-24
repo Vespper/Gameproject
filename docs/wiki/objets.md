@@ -8,7 +8,7 @@ On les trouve dans la salle du **trésor** (un gratuit) et à la **boutique** (p
 
 | Objet | Statut | Famille | Effet | Données | Prix boutique |
 |---|---|---|---|---|---|
-| Cœur robuste (`sturdy_heart`) | 🎮 En jeu | Statistique | +4 PV max (et +4 PV) | `max_health` +4 | 70 |
+| Cœur robuste (`sturdy_heart`) | 🎮 En jeu | Statistique | +1 PV max (et +1 PV) | `max_health` +1 | 70 |
 | Bottes légères (`light_boots`) | 🎮 En jeu | Statistique | +15 % de vitesse | `speed` ×1,15 | 60 |
 | Pointe affûtée (`sharp_tip`) | 🎮 En jeu | Statistique | +3 dégâts du tir | `shot_damage` +3 | 75 |
 | Gâchette rapide (`quick_trigger`) | 🎮 En jeu | Statistique | Tir 20 % plus rapide | `shot_cooldown` ×0,8 | 75 |
