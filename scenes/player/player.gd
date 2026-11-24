@@ -6,29 +6,23 @@ extends CharacterBody2D
 signal health_changed(current: int, maximum: int)
 signal died
 
-@export var speed: float = 240.0
-@export var max_health: int = 20
-## Secondes d'invulnérabilité après un contact avec un ennemi.
-@export var contact_invulnerability: float = 1.0
 @export var shot_scene: PackedScene
 
-@export_group("Tir")
-@export var shot_damage: float = 8.0
-## Secondes entre deux tirs.
-@export var shot_cooldown: float = 0.3
-@export var shot_speed: float = 750.0
-@export var shot_range: float = 360.0
-
-@export_group("Sort : onde de givre")
-@export var spell_damage: float = 20.0
-@export var spell_radius: float = 130.0
-@export_range(0.0, 1.0) var spell_slow_factor: float = 0.4
-@export var spell_slow_duration: float = 2.5
-@export var spell_cooldown: float = 8.0
-
-@export_group("Butin")
-## Distance à laquelle l'énergie est aspirée vers le personnage.
-@export var pickup_radius: float = 90.0
+# Stats : copiées depuis le RunState par apply_stats() (base du personnage + objets).
+# Les valeurs ci-dessous ne servent que si le personnage est utilisé sans run.
+var speed: float = 240.0
+var max_health: int = 20
+var contact_invulnerability: float = 1.0
+var pickup_radius: float = 90.0
+var shot_damage: float = 8.0
+var shot_cooldown: float = 0.3
+var shot_speed: float = 750.0
+var shot_range: float = 360.0
+var spell_damage: float = 20.0
+var spell_radius: float = 130.0
+var spell_slow_factor: float = 0.4
+var spell_slow_duration: float = 2.5
+var spell_cooldown: float = 8.0
 
 ## Nœud qui reçoit les tirs et effets visuels (défini par la salle).
 var effects_parent: Node
@@ -51,6 +45,24 @@ var _body_radius: float = 16.0
 func _ready() -> void:
 	health = max_health
 	add_to_group("player")
+
+
+## Reprend les stats finales du run (à rappeler après chaque objet) ainsi que ses PV.
+func apply_stats(state: RunState) -> void:
+	speed = state.stat(&"speed")
+	max_health = state.max_health
+	health = state.health
+	contact_invulnerability = state.stat(&"contact_invulnerability")
+	pickup_radius = state.stat(&"pickup_radius")
+	shot_damage = state.stat(&"shot_damage")
+	shot_cooldown = state.stat(&"shot_cooldown")
+	shot_speed = state.stat(&"shot_speed")
+	shot_range = state.stat(&"shot_range")
+	spell_damage = state.stat(&"spell_damage")
+	spell_radius = state.stat(&"spell_radius")
+	spell_slow_factor = state.stat(&"spell_slow_factor")
+	spell_slow_duration = state.stat(&"spell_slow_duration")
+	spell_cooldown = state.stat(&"spell_cooldown")
 
 
 func _physics_process(delta: float) -> void:

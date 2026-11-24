@@ -1,22 +1,23 @@
 extends Node2D
 ## Prototype gris d'une salle : chemin généré, sortie, tours posées librement hors du chemin,
 ## vagues enchaînées, énergie, portes. La salle relie les systèmes et gère l'état de la salle.
+## Les salles sans combat (départ, trésor, boutique) n'ont ni chemin ni vagues ; le trésor et
+## la boutique posent leurs articles sur des socles.
 ## Lancée seule (F6), elle se suffit à elle-même ; dans un run, la scène principale lui donne
-## l'état du run (PV, énergie), sa place sur la carte et ses portes.
+## l'état du run (personnage, PV, énergie), sa place sur la carte et ses portes.
 
 ## Le personnage passe une porte ouverte. direction : côté de la salle (Vector2i.LEFT…).
 signal door_entered(direction: Vector2i)
 
-@export var tower_types: Array[TowerData] = []
+## Personnage utilisé quand la salle est lancée seule (dans un run, il vient du RunState).
+@export var character: CharacterData
 @export var tower_scene: PackedScene
 @export var pickup_scene: PackedScene
 @export var door_scene: PackedScene
-@export var start_energy: int = 100
-## Part du coût des tours rendue quand elles sont démontées en fin de salle.
-@export_range(0.0, 1.0) var tower_refund_ratio: float = 0.25
-## Hausse du coût pour chaque tour déjà posée dans la salle (0,3 = +30 % par tour).
+@export var pedestal_scene: PackedScene
+## Hausse du coût pour chaque tour déjà posée dans la salle (0,35 = +35 % par tour).
 ## Le compteur repart à zéro dans chaque salle.
-@export var tower_cost_increase: float = 0.3
+@export var tower_cost_increase: float = 0.35
 
 @export_group("Pose des tours")
 ## Distance minimale entre le centre d'une tour et le milieu du chemin.
@@ -48,6 +49,10 @@ var energy: int:
 		return run_state.energy
 	set(value):
 		run_state.energy = value
+## Types de tours possédés (ceux du run).
+var tower_types: Array[TowerData]:
+	get:
+		return run_state.tower_types
 ## Type de tour en cours de pose, ou -1 si le personnage est en mode tir.
 var build_selection: int = -1
 ## Tours posées dans cette salle (fait monter le coût des suivantes).
@@ -57,6 +62,9 @@ var _game_over: bool = false
 var _cleared: bool = false
 var _leaving: bool = false
 var _doors: Array[Door] = []
+var _pedestals: Array[Pedestal] = []
+## Socles touchés à l'image précédente : on n'achète qu'en arrivant dessus.
+var _touching: Dictionary = {}
 
 @onready var _enemy_path: Path2D = $EnemyPath
 @onready var _path_line: Line2D = $EnemyPath/PathLine
@@ -74,8 +82,7 @@ var _doors: Array[Door] = []
 
 func _ready() -> void:
 	if run_state == null:
-		run_state = RunState.new()
-		run_state.energy = start_energy
+		run_state = RunState.create(character)
 	_generate_path()
 	var curve: Curve2D = _enemy_path.curve
 	_path_line.points = curve.get_baked_points()
@@ -100,12 +107,16 @@ func _ready() -> void:
 	else:
 		_cleared = true
 		_set_doors_open(true)
-		if room_info.type == FloorRoom.Type.START:
-			# Salle de départ vide : ni chemin ni sortie
+		if room_info.type != FloorRoom.Type.COMBAT:
+			# Salle sans combat : ni chemin ni sortie
 			_enemy_path.visible = false
 			_base.visible = false
-		_hud.show_message("Choisis une porte" if room_info.type == FloorRoom.Type.START else "Salle déjà nettoyée")
-		get_tree().create_timer(2.0).timeout.connect(func() -> void: _hud.show_message(""))
+		_create_pedestals()
+		_hud.show_message(_welcome_message())
+		get_tree().create_timer(2.5).timeout.connect(func() -> void:
+			if not _leaving:
+				_hud.show_message("")
+		)
 	_refresh_hud()
 
 
@@ -113,6 +124,7 @@ func _process(_delta: float) -> void:
 	_hud.set_spell(_player.spell_time_left)
 	_hud.set_next_wave(_spawner.time_until_next_wave(), _spawner.current_wave + 2)
 	_overlay.queue_redraw()
+	_check_pedestals()
 	_check_doors()
 
 
@@ -163,7 +175,7 @@ func try_build(type_index: int, at: Vector2) -> bool:
 	energy -= cost
 	towers_built += 1
 	var tower := tower_scene.instantiate() as Tower
-	tower.data = tower_data
+	tower.data = run_state.tower_stats(tower_data)
 	tower.paid_cost = cost
 	tower.projectile_parent = _projectiles
 	_towers.add_child(tower)
@@ -215,6 +227,7 @@ func _add_energy(amount: int) -> void:
 
 
 func _refresh_hud() -> void:
+	_hud.set_character(run_state)
 	var wave_total: int = _spawner.waves.size() if has_combat() else 0
 	_hud.set_stats(_player.health, _player.max_health, energy, _spawner.current_wave + 1, wave_total)
 	var costs: Array[int] = []
@@ -276,7 +289,7 @@ func _dismantle_towers() -> int:
 	var refund: int = 0
 	for node in _towers.get_children():
 		var tower := node as Tower
-		refund += floori(tower.paid_cost * tower_refund_ratio)
+		refund += floori(tower.paid_cost * run_state.stat(&"tower_refund"))
 		RingEffect.spawn(_effects, tower.global_position, 30.0, tower.data.color, 0.5)
 		tower.queue_free()
 	_add_energy(refund)
@@ -313,11 +326,7 @@ func _generate_path() -> void:
 
 
 func _setup_player_health() -> void:
-	if run_state.max_health < 0:
-		run_state.max_health = _player.max_health
-		run_state.health = _player.max_health
-	_player.max_health = run_state.max_health
-	_player.health = run_state.health
+	_player.apply_stats(run_state)
 	_player.health_changed.connect(func(current: int, _maximum: int) -> void: run_state.health = current)
 	if entry_side != Vector2i.ZERO:
 		_player.global_position = _door_position(entry_side) - Vector2(entry_side) * 72.0
@@ -356,6 +365,83 @@ func _check_doors() -> void:
 			return
 
 
+func _welcome_message() -> String:
+	match room_info.type:
+		FloorRoom.Type.START:
+			return "Choisis une porte"
+		FloorRoom.Type.TREASURE:
+			return "Trésor : marche sur l'objet pour le prendre" if _pedestals.size() > 0 else "Trésor (vide)"
+		FloorRoom.Type.SHOP:
+			return "Boutique : marche sur un article pour l'acheter"
+	return "Salle déjà nettoyée"
+
+
+## Pose les articles pas encore pris de la salle (trésor, boutique), en ligne au centre.
+func _create_pedestals() -> void:
+	var remaining: Array[RoomOffer] = []
+	for offer in room_info.offers:
+		if not offer.taken:
+			remaining.append(offer)
+	var spacing: float = 210.0
+	# Au-dessus du milieu : on peut traverser la salle d'une porte latérale à l'autre sans rien acheter
+	var center: Vector2 = room_rect.get_center() + Vector2(0.0, -110.0)
+	for i in remaining.size():
+		var pedestal := pedestal_scene.instantiate() as Pedestal
+		pedestal.offer = remaining[i]
+		add_child(pedestal)
+		pedestal.global_position = center + Vector2((i - (remaining.size() - 1) / 2.0) * spacing, 0.0)
+		_pedestals.append(pedestal)
+
+
+func _check_pedestals() -> void:
+	if _game_over:
+		return
+	for pedestal in _pedestals.duplicate():
+		var touching: bool = pedestal.touches(_player.global_position)
+		if touching and not _touching.get(pedestal, false):
+			_take_offer(pedestal)
+		_touching[pedestal] = touching
+
+
+## Prend l'article du socle si le prix est payable. Renvoie vrai s'il a été pris.
+func _take_offer(pedestal: Pedestal) -> bool:
+	var offer: RoomOffer = pedestal.offer
+	if energy < offer.price:
+		_flash_message("Pas assez d'énergie (%d)" % offer.price)
+		return false
+	match offer.kind:
+		RoomOffer.Kind.ITEM:
+			run_state.add_item(offer.item)
+		RoomOffer.Kind.TOWER:
+			if not run_state.add_tower_type(offer.tower):
+				_flash_message("Plus d'emplacement de tour libre")
+				return false
+		RoomOffer.Kind.HEAL:
+			if run_state.health >= run_state.max_health:
+				_flash_message("PV déjà au maximum")
+				return false
+			run_state.heal(offer.heal_amount)
+	energy -= offer.price
+	offer.taken = true
+	_pedestals.erase(pedestal)
+	_touching.erase(pedestal)
+	RingEffect.spawn(_effects, pedestal.global_position, 40.0, offer.color(), 0.4)
+	pedestal.queue_free()
+	_player.apply_stats(run_state)
+	_refresh_hud()
+	_flash_message("%s : %s" % [offer.title(), offer.description()])
+	print("Article pris : %s (%d énergie)" % [offer.title(), offer.price])
+	return true
+
+
+func _flash_message(text: String) -> void:
+	_hud.show_message(text)
+	get_tree().create_timer(2.0).timeout.connect(func() -> void:
+		if not _game_over and not _leaving and _hud.get_message() == text:
+			_hud.show_message("")
+	)
+
+
 func _draw_overlay() -> void:
 	# Entrée des ennemis
 	if not _enemy_path.visible:
@@ -368,7 +454,7 @@ func _draw_overlay() -> void:
 	# Aperçu de la tour en cours de pose : vert si possible, rouge sinon
 	if _game_over or build_selection < 0:
 		return
-	var tower_data: TowerData = tower_types[build_selection]
+	var tower_data: TowerData = run_state.tower_stats(tower_types[build_selection])
 	var at: Vector2 = get_global_mouse_position()
 	var ok: bool = energy >= tower_cost(build_selection) and can_build_at(at)
 	var tint := Color(0.4, 1.0, 0.5) if ok else Color(1.0, 0.35, 0.35)

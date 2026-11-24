@@ -1,8 +1,30 @@
 [gd_resource type="Resource" script_class="FloorData" format=3]
 
 [ext_resource type="Script" path="res://scripts/data/floor_data.gd" id="1_floor"]
+[ext_resource type="Script" path="res://scripts/data/item_data.gd" id="2_item_data"]
+[ext_resource type="Script" path="res://scripts/data/tower_data.gd" id="3_tower_data"]
+[ext_resource type="Resource" path="res://data/towers/frost.tres" id="4_frost"]
+[ext_resource type="Resource" path="res://data/towers/mortar.tres" id="5_mortar"]
+[ext_resource type="Resource" path="res://data/items/frost_crystal.tres" id="item_frost_crystal"]
+[ext_resource type="Resource" path="res://data/items/lens.tres" id="item_lens"]
+[ext_resource type="Resource" path="res://data/items/light_boots.tres" id="item_light_boots"]
+[ext_resource type="Resource" path="res://data/items/magnet.tres" id="item_magnet"]
+[ext_resource type="Resource" path="res://data/items/quick_trigger.tres" id="item_quick_trigger"]
+[ext_resource type="Resource" path="res://data/items/quiver.tres" id="item_quiver"]
+[ext_resource type="Resource" path="res://data/items/recycling.tres" id="item_recycling"]
+[ext_resource type="Resource" path="res://data/items/sharp_tip.tres" id="item_sharp_tip"]
+[ext_resource type="Resource" path="res://data/items/spyglass.tres" id="item_spyglass"]
+[ext_resource type="Resource" path="res://data/items/sturdy_heart.tres" id="item_sturdy_heart"]
+[ext_resource type="Resource" path="res://data/items/whetstone.tres" id="item_whetstone"]
 
 [resource]
 script = ExtResource("1_floor")
-room_count = 5
+room_count = 7
 grid_size = Vector2i(9, 8)
+treasure_rooms = 1
+shop_rooms = 1
+item_pool = Array[ExtResource("2_item_data")]([ExtResource("item_frost_crystal"), ExtResource("item_lens"), ExtResource("item_light_boots"), ExtResource("item_magnet"), ExtResource("item_quick_trigger"), ExtResource("item_quiver"), ExtResource("item_recycling"), ExtResource("item_sharp_tip"), ExtResource("item_spyglass"), ExtResource("item_sturdy_heart"), ExtResource("item_whetstone")])
+shop_tower_pool = Array[ExtResource("3_tower_data")]([ExtResource("4_frost"), ExtResource("5_mortar")])
+shop_item_count = 2
+shop_heal_amount = 5
+shop_heal_price = 35

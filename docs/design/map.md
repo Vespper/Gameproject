@@ -65,9 +65,9 @@ Avec des salles de combat de 1 à 1,5 min, un run de 3 étages tient dans 20 à 
 |---|---|
 | Combat | Prototypée (chemin généré, portes) |
 | Départ | Prototypée (vide, portes ouvertes) |
-| Boss | Conçue |
-| Trésor | Conçue |
-| Boutique | Conçue |
+| Boss | Conçue (le cul-de-sac le plus éloigné lui est déjà réservé : c'est un combat pour l'instant) |
+| Trésor | Prototypée (un objet gratuit) |
+| Boutique | Prototypée (2 objets, 1 type de tour, soin) |
 | Élite (mini-boss) | Conçue |
 | Atelier | Conçue |
 | Repos | Conçue |
@@ -82,7 +82,7 @@ L'énergie est **la seule monnaie du run** (l'or est abandonné). Elle sert à t
 - On la gagne en ramassant ce que lâchent les ennemis (un peu risqué), et via les récompenses « énergie ».
 - Elle suit le joueur d'une salle à l'autre.
 - Les tours posées sont démontées à la fin de la salle et rendent 25 % de ce qu'elles ont coûté.
-- Dans une salle, chaque tour posée rend les suivantes 30 % plus chères (le compteur repart à zéro à la salle suivante).
+- Dans une salle, chaque tour posée rend les suivantes 35 % plus chères (le compteur repart à zéro à la salle suivante).
 
 La tension voulue : chaque tour posée protège maintenant, mais coûte la moitié de son prix à la boutique et à l'atelier. Une salle facile se joue en économisant, une salle dure en investissant. La carte ajoute un second arbitrage : faire un combat de plus pour gagner de l'énergie, ou l'éviter pour garder ses PV.
 
@@ -101,7 +101,7 @@ Affiche les salles visitées et les salles voisines (avec l'icône de leur type)
 
 ## Questions ouvertes
 
-- Prix en énergie de la boutique et de l'atelier, quantité d'énergie gagnée par salle.
-- Le soin de la boutique et du Repos : combien de PV ?
+- Prix en énergie de l'atelier, quantité d'énergie gagnée par salle. Boutique (prototype) : objets 55 à 85, types de tours 80 à 100, soin de 5 PV à 35.
+- Le soin du Repos : combien de PV ?
 - Peut-on revendre ou remplacer un type de tour en boutique, et contre combien ?
 - Mini-carte : le boss doit-il vraiment être visible dès le départ ?

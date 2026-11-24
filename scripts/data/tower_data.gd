@@ -5,6 +5,8 @@ extends Resource
 @export var display_name: String = "Tour"
 ## Coût en énergie pour la poser.
 @export var cost: int = 50
+## Prix en énergie du type de tour à la boutique.
+@export var shop_price: int = 90
 @export var damage: float = 10.0
 ## Tirs par seconde.
 @export var fire_rate: float = 1.0

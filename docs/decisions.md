@@ -31,3 +31,6 @@ Une ligne par décision, la plus récente en bas. Ce qui est écrit ici n'est pl
 | 2026-11-23 | Salle secrète | Pas de bombes : mur fissuré ouvert en tirant dessus. |
 | 2026-11-24 | Portes | Comme Isaac : fermées dès qu'on entre dans une salle de combat, ouvertes seulement une fois la salle vaincue. |
 | 2026-11-24 | Économie des tours | Remboursement de fin de salle à 25 % (au lieu de 50 %), moins d'énergie lâchée par les ennemis (environ −40 %), et +30 % de coût pour chaque tour déjà posée dans la salle. Raison : dès la 2e salle on pouvait construire beaucoup trop. |
+| 2026-11-24 | Personnage | Façon Isaac : chaque personnage a des stats de base dans `data/characters/*.tres`, affichées en jeu ; les objets les modifient (base + bonus, puis multiplicateurs) sans toucher au fichier. Départ : Archer seul, 100 d'énergie. |
+| 2026-11-24 | Trésor et boutique | Dans l'étage dès maintenant, dans des culs-de-sac ; le plus éloigné est gardé pour le futur boss. On prend un article en marchant dessus (comme Isaac). Boutique : 2 objets, 1 type de tour, 1 soin. Un objet sort au plus une fois par étage. |
+| 2026-11-24 | Économie des tours | +35 % de coût par tour déjà posée dans la salle (au lieu de +30 %). Raison : la dernière salle restait trop simple. |

@@ -1,21 +1,32 @@
 # Personnages
 
-Les PV du personnage sont les PV du run. Il tire à distance vers la souris et a un sort à recharge. Stats 🎮 recopiées de `scenes/player/player.gd` (prototype) ; à déplacer dans `data/` quand il y aura plusieurs personnages.
+Les PV du personnage sont les PV du run. Il tire à distance vers la souris et a un sort à recharge.
 
-## Personnage de base
+Chaque personnage est un fichier `data/characters/*.tres` (`CharacterData`) : ses **stats de base**, son énergie et ses types de tours de départ. Les objets ne touchent jamais ce fichier : les stats finales sont calculées pendant le run (`RunState.stat()`), stat finale = (base + somme des bonus) × produit des multiplicateurs. Elles sont affichées en jeu à gauche de l'écran, avec ▲ quand un objet les a améliorées (▼ si empirées) ; à droite, les types de tours et les objets possédés.
 
-Statut : 🎮 En jeu (prototype). Volontairement un peu faible : il se renforce pendant le run. Commence avec l'Archer comme seul type de tour.
+## Personnage de base (`base`)
 
-| Stat | Valeur |
-|---|---|
-| PV | 20 |
-| Vitesse | 240 |
-| Invulnérabilité après un contact | 1 s |
-| Tir : dégâts / recharge | 8 / 0,3 s |
-| Tir : vitesse / portée | 750 / 360 |
-| Ramassage de l'énergie (rayon) | 90 |
+Statut : 🎮 En jeu (prototype). Volontairement un peu faible : il se renforce pendant le run.
 
-**Sort : onde de givre** (recharge 8 s) : 20 dégâts dans un rayon de 130, ralentit à 40 % pendant 2,5 s.
+| Stat | Nom dans les données | Valeur |
+|---|---|---|
+| Énergie de départ | `starting_energy` | 100 |
+| Types de tours de départ | `starting_towers` | Archer |
+| PV max | `max_health` | 20 |
+| Vitesse | `speed` | 240 |
+| Invulnérabilité après un contact | `contact_invulnerability` | 1 s |
+| Ramassage de l'énergie (rayon) | `pickup_radius` | 90 |
+| Tir : dégâts | `shot_damage` | 8 |
+| Tir : recharge (cadence) | `shot_cooldown` | 0,3 s (3,3 tirs/s) |
+| Tir : vitesse / portée | `shot_speed` / `shot_range` | 750 / 360 |
+| Sort : dégâts / rayon | `spell_damage` / `spell_radius` | 20 / 130 |
+| Sort : ralentissement | `spell_slow_factor` / `spell_slow_duration` | à 40 % pendant 2,5 s |
+| Sort : recharge | `spell_cooldown` | 8 s |
+| Tours : dégâts, cadence, portée | `tower_damage`, `tower_fire_rate`, `tower_range` | ×1 |
+| Tours : part rendue en fin de salle | `tower_refund` | 25 % |
+| Emplacements de types de tours | `tower_slots` | 3 |
+
+**Sort : onde de givre** : dégâts dans un rayon autour du personnage, et ralentissement.
 
 ## Autres personnages
 

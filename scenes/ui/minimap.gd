@@ -1,6 +1,7 @@
 class_name Minimap
 extends Control
 ## Mini-carte de l'étage : salles visitées, salles voisines (contour), salle actuelle.
+## Lettres : D départ, T trésor, $ boutique.
 ## Centrée sur la salle actuelle ; les salles lointaines restent cachées (voir map.md).
 
 @export var cell_size: float = 22.0
@@ -35,8 +36,9 @@ func _draw() -> void:
 			draw_rect(rect, Color(0.45, 0.45, 0.5))
 		else:
 			draw_rect(rect, Color(0.7, 0.7, 0.75), false, 2.0)
-		if room.type == FloorRoom.Type.START:
-			draw_string(font, rect.position + Vector2(6.0, 16.0), "D", HORIZONTAL_ALIGNMENT_LEFT, -1, 14, Color.BLACK if cell == current else Color.WHITE)
+		var letter: String = FloorRoom.TYPE_LETTERS.get(room.type, "")
+		if letter != "":
+			draw_string(font, rect.position + Vector2(6.0, 16.0), letter, HORIZONTAL_ALIGNMENT_LEFT, -1, 14, Color.BLACK if cell == current else Color.WHITE)
 
 
 func _next_to_visited(cell: Vector2i) -> bool:
